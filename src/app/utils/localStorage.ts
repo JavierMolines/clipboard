@@ -1,7 +1,11 @@
 import { makeId } from "./methods";
 
 export const countLocalStorage = () => {
-	return localStorage.length;
+	try {
+		return localStorage.length;
+	} catch (error) {
+		return 0;
+	}
 };
 
 export const addLocalStorage = (clipboard: string): boolean => {
