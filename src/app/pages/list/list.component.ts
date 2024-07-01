@@ -1,9 +1,9 @@
 import { Component } from "@angular/core";
 
 @Component({
-	selector: "app-main",
+	selector: "app-list",
 	standalone: true,
 	imports: [],
-	templateUrl: "./main.component.html",
+	templateUrl: "./list.component.html",
 })
-export class MainComponent {}
+export class ListComponent {}

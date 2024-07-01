@@ -8,8 +8,8 @@
       <nav class="mt-6 flex flex-col items-start">
         @for (item of MENU_OPTIONS; track item.title) {
           <div class="w-full relative">
-            <button
-              (click)="handlerToggleMenu(item.title)"
+            <a
+              routerLink="{{ item.link }}"
               [name]="'button' + item.title"
               class="w-full py-2.5 px-4 flex gap-1 rounded transition duration-200 hover:bg-gray-700"
             >
@@ -20,7 +20,7 @@
                 height="24"
               />
               <p>{{ item.title }}</p>
-            </button>
+            </a>
           </div>
         }
       </nav>

@@ -1,0 +1,27 @@
+<form class="flex flex-col gap-4">
+  <h3 class="text-2xl">Paste your clipboard</h3>
+
+  <textarea
+    rows="4"
+    class="block p-2.5 w-3/5 text-md rounded-lg text-gray-950 bg-gray-300 border-gray-600 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500"
+    placeholder="Data here..."
+    [formControl]="textArea"
+  ></textarea>
+
+  <div class="flex gap-2">
+    <button
+      (click)="buttonClick()"
+      type="button"
+      class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-md px-5 py-2.5 mb-2"
+    >
+      Save
+    </button>
+    <button
+      (click)="clearForm()"
+      type="button"
+      class="focus:outline-none text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-md px-5 py-2.5 mb-2"
+    >
+      Clear
+    </button>
+  </div>
+</form>
