@@ -24,10 +24,24 @@ const getMappingClipboardItems = (): Array<string> => {
 	}
 };
 
+const makeMapperClipboardItems = (data: Array<string>) => {
+	return data.map((item) => {
+		const partials = getItemLocalStorage(item);
+		const record: RecordClipboard = {
+			id: item,
+			time: partials.time,
+			data: partials.data,
+		};
+
+		return record;
+	});
+};
+
 const addLocalStorage = (clipboard: string): boolean => {
 	try {
 		const keyGen = makeId();
 		const record: RecordClipboard = {
+			id: keyGen,
 			time: new Date().toLocaleDateString(),
 			data: clipboard,
 		};
@@ -52,14 +66,15 @@ const deleteItemLocalStorage = (key: string) => {
 		const globalData = getMappingClipboardItems();
 		const newData = globalData.filter((item) => item !== key);
 		localStorage.setItem("data", JSON.stringify(newData));
-		return true;
+		return newData;
 	} catch (error) {
 		console.log(error);
-		return false;
+		return [];
 	}
 };
 
 export {
+	makeMapperClipboardItems,
 	getItemLocalStorage,
 	getMappingClipboardItems,
 	addLocalStorage,

@@ -1,8 +1,8 @@
-import { Component } from "@angular/core";
+import { Component, signal } from "@angular/core";
 import { ClipboardCardComponent } from "@components/clipboard-card/clipboard-card.component";
 import {
-	getItemLocalStorage,
 	getMappingClipboardItems,
+	makeMapperClipboardItems,
 } from "src/app/utils/localStorage";
 
 @Component({
@@ -12,14 +12,9 @@ import {
 	templateUrl: "./clipboard-list.component.html",
 })
 export class ClipboardListComponent {
-	totalItems = getMappingClipboardItems().map((item) => {
-		const partials = getItemLocalStorage(item);
-		const record = {
-			id: item,
-			time: partials.time,
-			data: partials.data,
-		};
+	totalItems = signal(makeMapperClipboardItems(getMappingClipboardItems()));
 
-		return record;
-	});
+	updateListItems(newList: Array<RecordClipboard>) {
+		this.totalItems.set(newList);
+	}
 }
