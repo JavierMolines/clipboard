@@ -6,13 +6,13 @@ interface IDatagramNavbar {
 
 export const datagram: Array<IDatagramNavbar> = [
 	{
-		img: "create",
-		title: "Create clipboard",
-		link: "/create",
-	},
-	{
 		img: "document",
 		title: "List clipboard",
 		link: "/",
+	},
+	{
+		img: "create",
+		title: "Create clipboard",
+		link: "/create",
 	},
 ];

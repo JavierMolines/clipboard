@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
+import { addLocalStorage } from "src/app/utils/localStorage";
 
 @Component({
 	selector: "app-create",
@@ -14,18 +15,28 @@ export class CreateComponent {
 		this.textArea.reset();
 	}
 
+	sendMessage(message: string) {
+		console.log(message);
+	}
+
 	buttonClick() {
 		const handlerTextArea = this.textArea.value?.trim() ?? "";
 
 		if (handlerTextArea.length === 0) {
-			console.log("Empty");
+			this.sendMessage("Empty");
 			return;
 		}
 
-		this.saveClipboard();
+		this.saveClipboard(handlerTextArea);
 	}
 
-	saveClipboard() {
-		console.log("Save");
+	saveClipboard(clipboard: string) {
+		const isInsert = addLocalStorage(clipboard);
+
+		if (!isInsert) {
+			this.sendMessage("Not Save");
+		}
+
+		this.clearForm();
 	}
 }
