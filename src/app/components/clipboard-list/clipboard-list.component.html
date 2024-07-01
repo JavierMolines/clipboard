@@ -1,1 +1,9 @@
-<p>clipboard-list works!</p>
+<h1>List of Clipboards</h1>
+
+<section
+  class="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+>
+  @for (item of totalItems; track $index) {
+    <app-clipboard-card [time]="item.time" [id]="item.id" [data]="item.data" />
+  }
+</section>
