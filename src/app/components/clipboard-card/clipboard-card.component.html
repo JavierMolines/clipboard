@@ -1,5 +1,17 @@
-<div class="bg-gray-300">
-  <p>{{ id }}</p>
-  <p>{{ time }}</p>
+<div
+  class="relative group bg-orange-300 hover:bg-orange-400 pl-4 pr-12 py-4 rounded-lg overflow-ellipsis overflow-hidden h-[160px] transition-all duration-200"
+>
   <p>{{ data }}</p>
+  <button
+    type="button"
+    class="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-200 top-4 right-4 p-0.5 rounded-lg hover:bg-white"
+  >
+    <img src="/icons/delete.svg" alt="delete.svg" width="24" height="24" />
+  </button>
+  <button
+    type="button"
+    class="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-200 top-16 right-4 p-0.5 rounded-lg hover:bg-white"
+  >
+    <img src="/icons/copy.svg" alt="copy.svg" width="24" height="24" />
+  </button>
 </div>
