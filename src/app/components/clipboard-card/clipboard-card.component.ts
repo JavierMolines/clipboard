@@ -19,4 +19,15 @@ export class ClipboardCardComponent {
 			console.log("Failed delete.");
 		}
 	}
+
+	loadClipboard(data: string) {
+		navigator.clipboard
+			.writeText(data)
+			.then(() => {
+				console.log("Copy finish");
+			})
+			.catch((err) => {
+				console.error("Error copy", err);
+			});
+	}
 }
