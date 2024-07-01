@@ -1,4 +1,5 @@
 import { Component, Input } from "@angular/core";
+import { deleteItemLocalStorage } from "src/app/utils/localStorage";
 
 @Component({
 	selector: "app-clipboard-card",
@@ -10,4 +11,12 @@ export class ClipboardCardComponent {
 	@Input({ required: true }) id = "";
 	@Input({ required: true }) time = "";
 	@Input({ required: true }) data = "";
+
+	deleteItem(key: string) {
+		const hasDelete = deleteItemLocalStorage(key);
+
+		if (!hasDelete) {
+			console.log("Failed delete.");
+		}
+	}
 }

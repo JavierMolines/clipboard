@@ -20,7 +20,6 @@ export class ClipboardListComponent {
 			data: partials.data,
 		};
 
-		console.log(record);
 		return record;
 	});
 }

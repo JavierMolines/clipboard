@@ -2,7 +2,8 @@ import { makeId } from "./methods";
 
 const countLocalStorage = () => {
 	try {
-		return localStorage.getItem("data")?.length;
+		const storage = getMappingClipboardItems();
+		return storage.length;
 	} catch (error) {
 		return 0;
 	}
@@ -45,9 +46,23 @@ const addMappingLocalStorage = (key: string) => {
 	localStorage.setItem("data", JSON.stringify(globalData));
 };
 
+const deleteItemLocalStorage = (key: string) => {
+	try {
+		localStorage.removeItem(key);
+		const globalData = getMappingClipboardItems();
+		const newData = globalData.filter((item) => item !== key);
+		localStorage.setItem("data", JSON.stringify(newData));
+		return true;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+};
+
 export {
 	getItemLocalStorage,
 	getMappingClipboardItems,
 	addLocalStorage,
 	countLocalStorage,
+	deleteItemLocalStorage,
 };
