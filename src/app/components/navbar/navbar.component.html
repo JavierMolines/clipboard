@@ -1,6 +1,17 @@
 <section class="bg-gray-100 font-sans leading-normal tracking-normal">
-  <div class="flex flex-no-wrap">
-    <div class="w-[200px] h-screen bg-gray-800 text-white">
+  <div class="flex flex-no-wrap relative">
+    <button
+      (click)="handlerMenuToggle()"
+      type="button"
+      class="absolute top-4 right-4 lg:hidden"
+    >
+      <img width="24" height="24" src="/icons/menu.svg" alt="hamburger" />
+    </button>
+
+    <div
+      #menuSlide
+      class="z-10 hidden absolute lg:block lg:static w-[200px] h-screen bg-gray-800 text-white"
+    >
       <div class="p-6 text-center font-bold border-gray-700">
         <h3 class="text-2xl">Clipboard Manager</h3>
       </div>
@@ -26,7 +37,7 @@
       </nav>
     </div>
 
-    <div class="flex-1 p-10">
+    <div class="flex-1 p-10 h-screen lg:h-auto">
       <router-outlet />
     </div>
   </div>
