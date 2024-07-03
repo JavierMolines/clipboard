@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild } from "@angular/core";
 import {
-	Router,
 	NavigationEnd,
+	Router,
 	RouterLinkWithHref,
 	RouterModule,
 } from "@angular/router";
@@ -20,15 +20,26 @@ export class NavbarComponent {
 
 	constructor(private router: Router) {}
 
+	getMenuElement() {
+		return this.menuSlide.nativeElement as HTMLDivElement;
+	}
+
 	handlerMenuToggle() {
-		const menuElement = this.menuSlide.nativeElement as HTMLDivElement;
+		const menuElement = this.getMenuElement();
 		menuElement.classList.toggle("hidden");
+	}
+
+	handlerNavigateMenuClose() {
+		const menuElement = this.getMenuElement();
+		const styles = JSON.stringify(menuElement.classList);
+		if (/hidden/gi.test(styles)) return;
+		menuElement.classList.add("hidden");
 	}
 
 	ngOnInit() {
 		this.router.events.subscribe((event) => {
 			if (event instanceof NavigationEnd) {
-				this.handlerMenuToggle();
+				this.handlerNavigateMenuClose();
 			}
 		});
 	}
