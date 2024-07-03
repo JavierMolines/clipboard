@@ -1,27 +1,49 @@
-# Clipboard
+# Clipboard Manager
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.6.
+### Development Setup
 
-## Development server
+First, clone the repo and cd into the project:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Local setup
 
-## Code scaffolding
+Install Angular CLI
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```bash
+npm install -g @angular/cli
+```
 
-## Build
+Verify install
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```bash
+ng version
+```
 
-## Running unit tests
+Install dependencies
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```bash
+npm i
+```
 
-## Running end-to-end tests
+## Run locally
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Development server
 
-## Further help
+```bash
+npm run dev
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Generate build
+
+```bash
+npm run build
+```
+
+Move project to folder in Nginx ( Optional )
+
+```bash
+sudo chmod +x ./moveNginx.sh # Add execution permissions
+```
+
+```bash
+sudo ./moveNginx.sh # Run as sudo by permissions on the /var/www/ folder
+```
