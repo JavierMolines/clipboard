@@ -1,5 +1,8 @@
 # Clipboard Manager
 
+> [!IMPORTANT]
+> The server does not store any data entered in the view; all information is managed through localStorage.
+
 ### Development Setup
 
 First, clone the repo and cd into the project:
