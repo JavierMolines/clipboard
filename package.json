@@ -10,6 +10,7 @@
 		"lint": "biome check .",
 		"lint:fix": "biome check --write .",
 		"lint:prettier": "prettier . --write",
+		"lint:all": "npm run lint:prettier && npm run lint:fix",
 		"serve:ssr:clipboard": "node dist/clipboard/server/server.mjs"
 	},
 	"private": true,
