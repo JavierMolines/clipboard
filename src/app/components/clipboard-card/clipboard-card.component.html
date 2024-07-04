@@ -1,11 +1,12 @@
 <div
   (click)="loadClipboard(data)"
-  class="relative cursor-pointer group bg-orange-300 hover:bg-orange-400 pl-4 pr-12 py-4 rounded-lg overflow-ellipsis overflow-hidden h-[160px] transition-all duration-200"
+  class="relative break-words cursor-pointer group bg-orange-300 hover:bg-orange-400 pl-4 pr-8 py-2.5 rounded-lg overflow-ellipsis overflow-hidden h-[160px] transition-all duration-200"
 >
+  <span class="text-gray-700 text-xs">{{ time }}</span>
   <p>{{ data }}</p>
   <button
     type="button"
-    class="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-200 top-4 right-4 p-0.5 rounded-lg hover:bg-white"
+    class="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-200 top-3 right-1.5 p-0.5 rounded-lg hover:bg-white"
     (click)="deleteItem(id)"
   >
     <img src="/icons/delete.svg" alt="delete.svg" width="24" height="24" />
