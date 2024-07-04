@@ -40,9 +40,10 @@ const makeMapperClipboardItems = (data: Array<string>) => {
 const addLocalStorage = (clipboard: string): boolean => {
 	try {
 		const keyGen = makeId();
+		const dateNow = new Date();
 		const record: RecordClipboard = {
 			id: keyGen,
-			time: new Date().toLocaleDateString(),
+			time: `${dateNow.toLocaleDateString()}-${dateNow.toLocaleTimeString()}`,
 			data: clipboard,
 		};
 		localStorage.setItem(keyGen, JSON.stringify(record));
@@ -56,7 +57,7 @@ const addLocalStorage = (clipboard: string): boolean => {
 
 const addMappingLocalStorage = (key: string) => {
 	const globalData = getMappingClipboardItems();
-	globalData.push(key);
+	globalData.unshift(key);
 	localStorage.setItem("data", JSON.stringify(globalData));
 };
 
