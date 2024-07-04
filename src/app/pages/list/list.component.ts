@@ -9,6 +9,6 @@ import { countLocalStorage } from "src/app/utils/localStorage";
 	imports: [ClipboardListComponent, CreateItemClipComponent],
 	templateUrl: "./list.component.html",
 })
-export class ListComponent {
+export default class ListComponent {
 	hasItems = countLocalStorage();
 }

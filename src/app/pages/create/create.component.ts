@@ -8,7 +8,7 @@ import { addLocalStorage } from "src/app/utils/localStorage";
 	imports: [ReactiveFormsModule],
 	templateUrl: "./create.component.html",
 })
-export class CreateComponent {
+export default class CreateComponent {
 	textArea = new FormControl("");
 
 	clearForm() {

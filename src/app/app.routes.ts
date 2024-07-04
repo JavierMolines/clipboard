@@ -1,23 +1,23 @@
 import type { Routes } from "@angular/router";
-import { NavbarComponent } from "@components/navbar/navbar.component";
-import { NotFoundComponent } from "@pages/404/404.component";
-import { CreateComponent } from "@pages/create/create.component";
-import { ListComponent } from "@pages/list/list.component";
 
 export const routes: Routes = [
 	{
 		path: "",
-		component: NavbarComponent,
+		loadComponent: () => import("@components/navbar/navbar.component"),
 		children: [
-			{ path: "", component: ListComponent },
+			{ path: "", loadComponent: () => import("@pages/list/list.component") },
 			{
 				path: "create",
-				component: CreateComponent,
+				loadComponent: () => import("@pages/create/create.component"),
+			},
+			{
+				path: "settings",
+				loadComponent: () => import("@pages/settings/settings.component"),
 			},
 		],
 	},
 	{
 		path: "**",
-		component: NotFoundComponent,
+		loadComponent: () => import("@pages/404/404.component"),
 	},
 ];

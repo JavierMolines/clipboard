@@ -15,4 +15,9 @@ export const datagram: Array<IDatagramNavbar> = [
 		title: "Create clipboard",
 		link: "/create",
 	},
+	{
+		img: "settings",
+		title: "Settings",
+		link: "/settings",
+	},
 ];

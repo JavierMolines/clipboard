@@ -1,3 +1,4 @@
+import { ID_CLIPBOARDS_ITEMS } from "../constants/main";
 import { makeId } from "./methods";
 
 const countLocalStorage = () => {
@@ -18,7 +19,7 @@ const getItemLocalStorage = (key: string): RecordClipboard => {
 
 const getMappingClipboardItems = (): Array<string> => {
 	try {
-		return JSON.parse(localStorage.getItem("data") ?? "[]");
+		return JSON.parse(localStorage.getItem(ID_CLIPBOARDS_ITEMS) ?? "[]");
 	} catch (error) {
 		return [];
 	}
@@ -58,7 +59,7 @@ const addLocalStorage = (clipboard: string): boolean => {
 const addMappingLocalStorage = (key: string) => {
 	const globalData = getMappingClipboardItems();
 	globalData.unshift(key);
-	localStorage.setItem("data", JSON.stringify(globalData));
+	localStorage.setItem(ID_CLIPBOARDS_ITEMS, JSON.stringify(globalData));
 };
 
 const deleteItemLocalStorage = (key: string) => {
@@ -66,7 +67,7 @@ const deleteItemLocalStorage = (key: string) => {
 		localStorage.removeItem(key);
 		const globalData = getMappingClipboardItems();
 		const newData = globalData.filter((item) => item !== key);
-		localStorage.setItem("data", JSON.stringify(newData));
+		localStorage.setItem(ID_CLIPBOARDS_ITEMS, JSON.stringify(newData));
 		return newData;
 	} catch (error) {
 		console.log(error);
@@ -74,7 +75,35 @@ const deleteItemLocalStorage = (key: string) => {
 	}
 };
 
+const makeOptionSettingsStorage = (key: string, data: SettingsOptions) => {
+	try {
+		localStorage.setItem(key, JSON.stringify(data));
+	} catch (error) {}
+};
+
+const getOptionSettingsStorage = (key: string): SettingsOptions => {
+	try {
+		return JSON.parse(localStorage.getItem(key) ?? "");
+	} catch (error) {
+		return {
+			value: "",
+		};
+	}
+};
+
+const checkExistInStorage = (key: string) => {
+	try {
+		JSON.parse(localStorage.getItem(key) ?? "");
+		return true;
+	} catch (error) {
+		return false;
+	}
+};
+
 export {
+	checkExistInStorage,
+	getOptionSettingsStorage,
+	makeOptionSettingsStorage,
 	makeMapperClipboardItems,
 	getItemLocalStorage,
 	getMappingClipboardItems,

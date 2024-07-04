@@ -5,6 +5,11 @@ import {
 	RouterLinkWithHref,
 	RouterModule,
 } from "@angular/router";
+import { OPTIONS_BUTTON_CHECK } from "src/app/constants/main";
+import {
+	checkExistInStorage,
+	makeOptionSettingsStorage,
+} from "src/app/utils/localStorage";
 import { datagram } from "./navbar.data";
 
 @Component({
@@ -13,7 +18,7 @@ import { datagram } from "./navbar.data";
 	imports: [RouterLinkWithHref, RouterModule],
 	templateUrl: "./navbar.component.html",
 })
-export class NavbarComponent {
+export default class NavbarComponent {
 	MENU_OPTIONS = datagram;
 
 	@ViewChild("menuSlide") menuSlide!: ElementRef;
@@ -42,5 +47,11 @@ export class NavbarComponent {
 				this.handlerNavigateMenuClose();
 			}
 		});
+
+		if (!checkExistInStorage(OPTIONS_BUTTON_CHECK)) {
+			makeOptionSettingsStorage(OPTIONS_BUTTON_CHECK, {
+				value: "checked",
+			});
+		}
 	}
 }
