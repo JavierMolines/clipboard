@@ -1,6 +1,11 @@
 import { Component } from "@angular/core";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
-import { addLocalStorage } from "src/app/utils/localStorage";
+import { Router } from "@angular/router";
+import { OPTIONS_BUTTON_CHECK } from "src/app/constants/main";
+import {
+	addLocalStorage,
+	getOptionSettingsStorage,
+} from "src/app/utils/localStorage";
 
 @Component({
 	selector: "app-create",
@@ -10,6 +15,8 @@ import { addLocalStorage } from "src/app/utils/localStorage";
 })
 export default class CreateComponent {
 	textArea = new FormControl("");
+
+	constructor(private router: Router) {}
 
 	clearForm() {
 		this.textArea.reset();
@@ -38,5 +45,9 @@ export default class CreateComponent {
 		}
 
 		this.clearForm();
+
+		const buttonOption = getOptionSettingsStorage(OPTIONS_BUTTON_CHECK);
+		if (buttonOption.value === "") return;
+		this.router.navigate(["/"]);
 	}
 }
