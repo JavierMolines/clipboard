@@ -17,7 +17,12 @@ export const routes: Routes = [
 		],
 	},
 	{
-		path: "**",
+		path: "not-found",
 		loadComponent: () => import("@pages/404/404.component"),
+	},
+	{
+		path: "**",
+		redirectTo: "not-found",
+		pathMatch: "full",
 	},
 ];
