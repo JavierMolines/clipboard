@@ -1,6 +1,7 @@
 <div
   (click)="loadClipboard(data)"
-  class="relative break-words cursor-pointer group bg-orange-300 hover:bg-orange-400 pl-4 pr-8 py-2.5 rounded-lg overflow-ellipsis overflow-hidden h-[160px] transition-all duration-200"
+  style="scrollbar-width: none"
+  class="relative break-words cursor-pointer group bg-orange-300 hover:bg-orange-400 pl-4 pr-8 py-2.5 rounded-lg overflow-ellipsis overflow-y-scroll h-[160px] transition-all duration-200"
 >
   <span class="text-gray-700 text-xs">{{ time }}</span>
   <p>{{ data }}</p>
