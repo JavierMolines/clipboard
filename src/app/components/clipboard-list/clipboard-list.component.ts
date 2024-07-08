@@ -18,6 +18,12 @@ export class ClipboardListComponent {
 
 	updateListItems(newList: Array<RecordClipboard>) {
 		this.totalItems.set(newList);
+		const newMaxPage = Math.ceil(newList.length / 12);
+
+		if (this.currentPage() > newMaxPage) {
+			this.currentPage.set(newMaxPage);
+		}
+
 		this.movePage();
 	}
 
