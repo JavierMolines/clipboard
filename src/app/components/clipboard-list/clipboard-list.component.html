@@ -1,14 +1,94 @@
-<h1 class="text-2xl">List of Clipboards</h1>
+<section class="flex flex-col gap-4">
+  <h1 class="text-2xl">
+    List of Clipboards
 
-<section
-  class="mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
->
-  @for (item of totalItems(); track $index) {
-    <app-clipboard-card
-      [time]="item.time"
-      [id]="item.id"
-      [data]="item.data"
-      (updateListItems)="updateListItems($event)"
-    />
+    @if (totalItems().length > 12) {
+      <span class="text-sm text-gray-500"
+        >- Totals items: {{ totalItems().length }}</span
+      >
+    }
+  </h1>
+
+  @if (totalItems().length > 12) {
+    <div class="flex">
+      <nav aria-label="Page navigation">
+        <ul class="flex items-center -space-x-px h-10 text-base">
+          <li>
+            <button
+              (click)="prevPage()"
+              class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-gray-200 border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700"
+            >
+              <span class="sr-only">Previous</span>
+              <svg
+                class="w-3 h-3 rtl:rotate-180"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 6 10"
+              >
+                <path
+                  stroke="#000000"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 1 1 5l4 4"
+                />
+              </svg>
+            </button>
+          </li>
+
+          <li>
+            <button
+              (click)="nextPage()"
+              class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-gray-200 border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700"
+            >
+              <span class="sr-only">Next</span>
+              <svg
+                class="w-3 h-3 rtl:rotate-180"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 6 10"
+              >
+                <path
+                  stroke="#000000"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 9 4-4-4-4"
+                />
+              </svg>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
   }
+
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+  >
+    @for (item of viewItems(); track $index) {
+      <app-clipboard-card
+        [time]="item.time"
+        [id]="item.id"
+        [data]="item.data"
+        (updateListItems)="updateListItems($event)"
+      />
+    }
+  </div>
 </section>
+
+<!--
+
+          @for (item of totalItems(); track $index) {
+            <li>
+              <button
+                href="#"
+                class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+              >
+                {{ $count }}
+              </button>
+            </li>
+          }
+-->

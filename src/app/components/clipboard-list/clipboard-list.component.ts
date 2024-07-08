@@ -13,8 +13,33 @@ import {
 })
 export class ClipboardListComponent {
 	totalItems = signal(makeMapperClipboardItems(getMappingClipboardItems()));
+	viewItems = signal(this.totalItems().slice(0, 12));
+	currentPage = signal(1);
 
 	updateListItems(newList: Array<RecordClipboard>) {
 		this.totalItems.set(newList);
+		this.movePage();
+	}
+
+	nextPage() {
+		const nextPage = this.currentPage() + 1;
+		const maxPage = Math.ceil(this.totalItems().length / 12);
+		const newPage = nextPage > maxPage ? maxPage : nextPage;
+		this.currentPage.set(newPage);
+		this.movePage();
+	}
+
+	prevPage() {
+		const prevPage = this.currentPage() - 1;
+		const newPage = prevPage < 1 ? 1 : prevPage;
+		this.currentPage.set(newPage);
+		this.movePage();
+	}
+
+	movePage() {
+		const modifyCurrent = this.currentPage() - 1;
+		const initSection = modifyCurrent * 12;
+		const endSection = initSection + 12;
+		this.viewItems.set(this.totalItems().slice(initSection, endSection));
 	}
 }
