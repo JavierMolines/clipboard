@@ -1,0 +1,15 @@
+<div class="w-full relative">
+  <a
+    [routerLink]="link"
+    [name]="'button' + title"
+    class="w-full py-2.5 px-4 flex gap-1 rounded transition duration-200 hover:bg-gray-700"
+  >
+    <img
+      [src]="'/icons/' + img + '.svg'"
+      alt="not found"
+      width="24"
+      height="24"
+    />
+    <p class="text-lg xl:text-base">{{ title }}</p>
+  </a>
+</div>

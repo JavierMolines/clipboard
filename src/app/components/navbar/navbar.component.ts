@@ -1,25 +1,21 @@
 import { Component, ElementRef, ViewChild } from "@angular/core";
-import {
-	NavigationEnd,
-	Router,
-	RouterLinkWithHref,
-	RouterModule,
-} from "@angular/router";
+import { NavigationEnd, Router, RouterModule } from "@angular/router";
+import { NavbarOptionComponent } from "@components/navbar-option/navbar-option.component";
 import { OPTIONS_BUTTON_CHECK } from "src/app/constants/main";
 import {
 	checkExistInStorage,
 	makeOptionSettingsStorage,
 } from "src/app/utils/localStorage";
-import { datagram } from "./navbar.data";
+import { options } from "./navbar.data";
 
 @Component({
 	selector: "app-navbar",
 	standalone: true,
-	imports: [RouterLinkWithHref, RouterModule],
+	imports: [RouterModule, NavbarOptionComponent],
 	templateUrl: "./navbar.component.html",
 })
 export default class NavbarComponent {
-	MENU_OPTIONS = datagram;
+	MENU_OPTIONS = options;
 
 	@ViewChild("menuSlide") menuSlide!: ElementRef;
 
@@ -32,6 +28,7 @@ export default class NavbarComponent {
 	handlerMenuToggle() {
 		const menuElement = this.getMenuElement();
 		menuElement.classList.toggle("hidden");
+		menuElement.classList.toggle("flex");
 	}
 
 	handlerNavigateMenuClose() {
@@ -39,6 +36,7 @@ export default class NavbarComponent {
 		const styles = JSON.stringify(menuElement.classList);
 		if (/hidden/gi.test(styles)) return;
 		menuElement.classList.add("hidden");
+		menuElement.classList.remove("flex");
 	}
 
 	ngOnInit() {
