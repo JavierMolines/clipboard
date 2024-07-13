@@ -12,24 +12,23 @@ import {
 	templateUrl: "./clipboard-list.component.html",
 })
 export class ClipboardListComponent {
-	totalItems = signal(makeMapperClipboardItems(getMappingClipboardItems()));
-	viewItems = signal(this.totalItems().slice(0, 12));
 	currentPage = signal(1);
+	maxPages = signal(1);
+	totalItems = signal(makeMapperClipboardItems(getMappingClipboardItems()));
+	viewItems = signal<Array<RecordClipboard>>([]);
 
-	updateListItems(newList: Array<RecordClipboard>) {
-		this.totalItems.set(newList);
-		const newMaxPage = Math.ceil(newList.length / 12);
+	ngOnInit() {
+		this.maxPages.set(this.getMaxPages());
+		this.viewItems.set(this.totalItems().slice(0, 12));
+	}
 
-		if (this.currentPage() > newMaxPage) {
-			this.currentPage.set(newMaxPage);
-		}
-
-		this.movePage();
+	getMaxPages() {
+		return Math.ceil(this.totalItems().length / 12);
 	}
 
 	nextPage() {
 		const nextPage = this.currentPage() + 1;
-		const maxPage = Math.ceil(this.totalItems().length / 12);
+		const maxPage = this.getMaxPages();
 		const newPage = nextPage > maxPage ? maxPage : nextPage;
 		this.currentPage.set(newPage);
 		this.movePage();
@@ -47,5 +46,17 @@ export class ClipboardListComponent {
 		const initSection = modifyCurrent * 12;
 		const endSection = initSection + 12;
 		this.viewItems.set(this.totalItems().slice(initSection, endSection));
+	}
+
+	updateListItems(newList: Array<RecordClipboard>) {
+		this.totalItems.set(newList);
+		const newMaxPage = Math.ceil(newList.length / 12);
+
+		if (this.currentPage() > newMaxPage) {
+			this.currentPage.set(newMaxPage);
+		}
+
+		this.maxPages.set(newMaxPage);
+		this.movePage();
 	}
 }
