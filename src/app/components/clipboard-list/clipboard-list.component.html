@@ -1,13 +1,12 @@
 <section class="flex flex-col gap-4">
-  <h1 class="text-2xl">
-    List of Clipboards
+  <h1 class="text-2xl">List of Clipboards</h1>
 
-    @if (totalItems().length > 12) {
-      <span class="text-sm text-gray-500"
-        >- Totals items: {{ totalItems().length }}</span
-      >
-    }
-  </h1>
+  @if (totalItems().length > 12) {
+    <span class="text-sm text-gray-500"
+      >Totals items: {{ totalItems().length }} / Page: {{ currentPage() }} to
+      {{ maxPages() }}</span
+    >
+  }
 
   @if (totalItems().length > 12) {
     <div class="flex">
