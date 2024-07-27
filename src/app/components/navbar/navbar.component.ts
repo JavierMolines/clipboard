@@ -2,11 +2,8 @@ import { Component, ElementRef, ViewChild } from "@angular/core";
 import { NavigationEnd, Router, RouterModule } from "@angular/router";
 import { NavbarOptionComponent } from "@components/navbar-option/navbar-option.component";
 import { OPTIONS_BUTTON_CHECK } from "src/app/constants/main";
-import {
-	checkExistInStorage,
-	makeOptionSettingsStorage,
-} from "src/app/utils/localStorage";
 import { options } from "./navbar.data";
+import { UtilityStorage } from "@utils/storage/index.storage";
 
 @Component({
 	selector: "app-navbar",
@@ -46,8 +43,8 @@ export default class NavbarComponent {
 			}
 		});
 
-		if (!checkExistInStorage(OPTIONS_BUTTON_CHECK)) {
-			makeOptionSettingsStorage(OPTIONS_BUTTON_CHECK, {
+		if (!UtilityStorage.checkExistInStorage(OPTIONS_BUTTON_CHECK)) {
+			UtilityStorage.addOptionSettingsStorage(OPTIONS_BUTTON_CHECK, {
 				value: "checked",
 			});
 		}

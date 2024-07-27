@@ -1,9 +1,6 @@
 import { Component, signal } from "@angular/core";
 import { ClipboardCardComponent } from "@components/clipboard-card/clipboard-card.component";
-import {
-	getMappingClipboardItems,
-	makeMapperClipboardItems,
-} from "src/app/utils/localStorage";
+import { UtilityStorage } from "@utils/storage/index.storage";
 
 @Component({
 	selector: "app-clipboard-list",
@@ -14,8 +11,12 @@ import {
 export class ClipboardListComponent {
 	currentPage = signal(1);
 	maxPages = signal(1);
-	totalItems = signal(makeMapperClipboardItems(getMappingClipboardItems()));
 	viewItems = signal<Array<RecordClipboard>>([]);
+	totalItems = signal(
+		UtilityStorage.addMapperClipboardItems(
+			UtilityStorage.getMappingClipboardItems(),
+		),
+	);
 
 	ngOnInit() {
 		this.maxPages.set(this.getMaxPages());

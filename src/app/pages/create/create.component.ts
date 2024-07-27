@@ -1,11 +1,8 @@
 import { Component } from "@angular/core";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { Router } from "@angular/router";
+import { UtilityStorage } from "@utils/storage/index.storage";
 import { OPTIONS_BUTTON_CHECK } from "src/app/constants/main";
-import {
-	addLocalStorage,
-	getOptionSettingsStorage,
-} from "src/app/utils/localStorage";
 
 @Component({
 	selector: "app-create",
@@ -38,7 +35,7 @@ export default class CreateComponent {
 	}
 
 	saveClipboard(clipboard: string) {
-		const isInsert = addLocalStorage(clipboard);
+		const isInsert = UtilityStorage.addLocalStorage(clipboard);
 
 		if (!isInsert) {
 			this.sendMessage("Not Save");
@@ -46,7 +43,8 @@ export default class CreateComponent {
 
 		this.clearForm();
 
-		const buttonOption = getOptionSettingsStorage(OPTIONS_BUTTON_CHECK);
+		const buttonOption =
+			UtilityStorage.getOptionSettingsStorage(OPTIONS_BUTTON_CHECK);
 		if (buttonOption.value === "") return;
 		this.router.navigate(["/"]);
 	}
