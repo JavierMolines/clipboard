@@ -14,7 +14,8 @@ export class ClipboardCardComponent {
 
 	@Output() updateListItems = new EventEmitter();
 
-	deleteItem(key: string) {
+	deleteItem(event: Event, key: string) {
+		event.stopPropagation();
 		const newList = UtilityStorage.addMapperClipboardItems(
 			UtilityStorage.deleteItemLocalStorage(key),
 		);
