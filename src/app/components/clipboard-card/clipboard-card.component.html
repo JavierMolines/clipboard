@@ -1,14 +1,18 @@
 <div
   (click)="loadClipboard(data)"
   style="scrollbar-width: none"
-  class="relative break-words cursor-pointer group bg-orange-300 hover:bg-orange-400 pl-4 pr-8 py-2.5 rounded-lg overflow-ellipsis overflow-y-scroll h-[160px] transition-all duration-200"
+  class="select-none relative break-words cursor-pointer group bg-orange-300 hover:bg-orange-400 pl-4 pr-8 py-2.5 rounded-lg overflow-ellipsis overflow-y-scroll h-[160px] transition-all duration-200"
 >
+  @if (title !== "") {
+    <h3 class="text-lg font-semibold">{{ title }}</h3>
+  }
+
   <span class="text-gray-700 text-xs">{{ time }}</span>
   <p>{{ data }}</p>
   <button
     type="button"
     class="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-200 top-3 right-1.5 p-0.5 rounded-lg hover:bg-white"
-    (click)="deleteItem(id)"
+    (click)="deleteItem($event, id)"
   >
     <img src="/icons/delete.svg" alt="delete.svg" width="24" height="24" />
   </button>

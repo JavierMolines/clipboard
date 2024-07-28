@@ -2,11 +2,25 @@
   <h3 class="text-2xl">Paste your clipboard</h3>
 
   <textarea
+    [id]="idTextInput"
+    autofocus="true"
     rows="4"
     class="block p-2.5 lg:w-3/5 text-md rounded-lg text-gray-950 bg-gray-300 border-gray-600 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500"
     placeholder="Data here..."
     [formControl]="textArea"
   ></textarea>
+
+  <h3 class="text-2xl">
+    Add a title
+    <span class="text-sm text-gray-700">(Optional)</span>
+  </h3>
+
+  <input
+    class="block p-2.5 lg:w-3/5 text-md rounded-lg text-gray-950 bg-gray-300 border-gray-600 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500"
+    type="text"
+    placeholder="Title here..."
+    [formControl]="titleInput"
+  />
 
   <div class="flex gap-2">
     <button

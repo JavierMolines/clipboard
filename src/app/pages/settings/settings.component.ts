@@ -1,9 +1,6 @@
 import { Component, signal } from "@angular/core";
+import { UtilityStorage } from "@utils/storage/index.storage";
 import { OPTIONS_BUTTON_CHECK } from "src/app/constants/main";
-import {
-	getOptionSettingsStorage,
-	makeOptionSettingsStorage,
-} from "src/app/utils/localStorage";
 
 @Component({
 	selector: "app-settings",
@@ -17,7 +14,7 @@ export default class SettingsComponent {
 	handlerClick() {
 		const newValue = this.statusButtonCheck() === "checked" ? "" : "checked";
 
-		makeOptionSettingsStorage(OPTIONS_BUTTON_CHECK, {
+		UtilityStorage.addOptionSettingsStorage(OPTIONS_BUTTON_CHECK, {
 			value: newValue,
 		});
 
@@ -25,7 +22,8 @@ export default class SettingsComponent {
 	}
 
 	ngOnInit() {
-		const buttonOption = getOptionSettingsStorage(OPTIONS_BUTTON_CHECK);
+		const buttonOption =
+			UtilityStorage.getOptionSettingsStorage(OPTIONS_BUTTON_CHECK);
 		this.statusButtonCheck.set(buttonOption.value);
 	}
 }

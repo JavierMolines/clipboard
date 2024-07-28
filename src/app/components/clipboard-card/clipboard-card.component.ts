@@ -1,8 +1,5 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import {
-	deleteItemLocalStorage,
-	makeMapperClipboardItems,
-} from "src/app/utils/localStorage";
+import { UtilityStorage } from "@utils/storage/index.storage";
 
 @Component({
 	selector: "app-clipboard-card",
@@ -14,11 +11,15 @@ export class ClipboardCardComponent {
 	@Input({ required: true }) id = "";
 	@Input({ required: true }) time = "";
 	@Input({ required: true }) data = "";
+	@Input({ required: true }) title = "";
 
 	@Output() updateListItems = new EventEmitter();
 
-	deleteItem(key: string) {
-		const newList = makeMapperClipboardItems(deleteItemLocalStorage(key));
+	deleteItem(event: Event, key: string) {
+		event.stopPropagation();
+		const newList = UtilityStorage.addMapperClipboardItems(
+			UtilityStorage.deleteItemLocalStorage(key),
+		);
 		this.updateListItems.emit(newList);
 	}
 
