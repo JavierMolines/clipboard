@@ -11,6 +11,7 @@ export class ClipboardCardComponent {
 	@Input({ required: true }) id = "";
 	@Input({ required: true }) time = "";
 	@Input({ required: true }) data = "";
+	@Input({ required: true }) title = "";
 
 	@Output() updateListItems = new EventEmitter();
 

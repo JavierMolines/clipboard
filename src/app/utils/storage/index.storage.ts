@@ -35,6 +35,7 @@ export class UtilityStorage {
 				id: item,
 				time: partials.time,
 				data: partials.data,
+				title: partials.title,
 			};
 
 			return record;
@@ -70,6 +71,7 @@ export class UtilityStorage {
 
 	static generateRecordClipboard(
 		clipboard: string,
+		title: string,
 		keyGen: string,
 	): RecordClipboard {
 		const dateNow = new Date();
@@ -77,14 +79,19 @@ export class UtilityStorage {
 			id: keyGen,
 			time: `${dateNow.toLocaleDateString()}-${dateNow.toLocaleTimeString()}`,
 			data: clipboard,
+			title,
 		};
 		return record;
 	}
 
-	static addLocalStorage(clipboard: string): boolean {
+	static addLocalStorage(clipboard: string, title: string): boolean {
 		try {
 			const keyGen = makeId();
-			const record = UtilityStorage.generateRecordClipboard(clipboard, keyGen);
+			const record = UtilityStorage.generateRecordClipboard(
+				clipboard,
+				title,
+				keyGen,
+			);
 			localStorage.setItem(keyGen, JSON.stringify(record));
 			UtilityStorage.addMappingLocalStorage(keyGen);
 			return true;
