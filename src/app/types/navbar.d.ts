@@ -1,5 +1,5 @@
 interface IDatagramNavbar {
-	img: string;
+	img: ValidIcons;
 	title: string;
 	link: string;
 }
