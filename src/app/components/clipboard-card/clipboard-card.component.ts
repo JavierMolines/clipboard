@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { IconsComponent } from "@components/icons/icons.component";
 import { UtilityStorage } from "@utils/storage/index.storage";
+import { CreateItemClipComponent } from "../create-item-clip/create-item-clip.component";
 
 @Component({
 	selector: "app-clipboard-card",
 	standalone: true,
-	imports: [],
+	imports: [IconsComponent, CreateItemClipComponent],
 	templateUrl: "./clipboard-card.component.html",
 })
 export class ClipboardCardComponent {

@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild } from "@angular/core";
 import { NavigationEnd, Router, RouterModule } from "@angular/router";
+import { IconsComponent } from "@components/icons/icons.component";
 import { NavbarOptionComponent } from "@components/navbar-option/navbar-option.component";
 import { UtilityStorage } from "@utils/storage/index.storage";
 import { OPTIONS_BUTTON_CHECK } from "src/app/constants/main";
@@ -8,7 +9,7 @@ import { options } from "./navbar.data";
 @Component({
 	selector: "app-navbar",
 	standalone: true,
-	imports: [RouterModule, NavbarOptionComponent],
+	imports: [RouterModule, NavbarOptionComponent, IconsComponent],
 	templateUrl: "./navbar.component.html",
 })
 export default class NavbarComponent {
