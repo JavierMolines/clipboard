@@ -25,8 +25,8 @@
   <div class="flex gap-2">
     <button
       aria-label="Save clipboard"
-      (click)="buttonClick()"
-      type="button"
+      (click)="buttonClick($event)"
+      type="submit"
       class="w-full lg:w-auto focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-md px-5 py-2.5 mb-2"
     >
       Save

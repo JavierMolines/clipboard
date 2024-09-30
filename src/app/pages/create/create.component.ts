@@ -27,7 +27,9 @@ export default class CreateComponent implements AfterViewInit {
 		console.log(message);
 	}
 
-	buttonClick() {
+	buttonClick(event: Event) {
+		event.preventDefault();
+
 		const handlerTextArea = this.textArea.value?.trim() ?? "";
 		const handlerTitleInput = this.titleInput.value?.trim() ?? "";
 
