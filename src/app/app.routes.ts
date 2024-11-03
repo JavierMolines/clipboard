@@ -12,7 +12,7 @@ export const routes: Routes = [
 		children: [
 			{
 				path: "",
-				//loadComponent: () => import("@pages/list/list.component") },
+				//loadComponent: () => import("@pages/list/list.component"),
 				component: ListComponent,
 			},
 			{
