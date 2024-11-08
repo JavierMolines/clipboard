@@ -13,6 +13,11 @@ export const options: IOptionsNavbar = {
 	],
 	bottom: [
 		{
+			img: "storage",
+			title: "Storage",
+			link: "/storage",
+		},
+		{
 			img: "settings",
 			title: "Settings",
 			link: "/settings",
