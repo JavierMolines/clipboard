@@ -3,6 +3,7 @@ import NavbarComponent from "@components/navbar/navbar.component";
 import CreateComponent from "@pages/create/create.component";
 import ListComponent from "@pages/list/list.component";
 import SettingsComponent from "@pages/settings/settings.component";
+import StorageComponent from "@pages/storage/storage.component";
 
 export const routes: Routes = [
 	{
@@ -12,7 +13,7 @@ export const routes: Routes = [
 		children: [
 			{
 				path: "",
-				//loadComponent: () => import("@pages/list/list.component") },
+				//loadComponent: () => import("@pages/list/list.component"),
 				component: ListComponent,
 			},
 			{
@@ -24,6 +25,11 @@ export const routes: Routes = [
 				path: "settings",
 				//loadComponent: () => import("@pages/settings/settings.component"),
 				component: SettingsComponent,
+			},
+			{
+				path: "storage",
+				//loadComponent: () => import("@pages/storage/storage.component"),
+				component: StorageComponent,
 			},
 		],
 	},

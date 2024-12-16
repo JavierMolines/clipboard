@@ -4,7 +4,6 @@ import { UtilityStorage } from "@utils/storage/index.storage";
 
 @Component({
 	selector: "app-clipboard-list",
-	standalone: true,
 	imports: [ClipboardCardComponent],
 	templateUrl: "./clipboard-list.component.html",
 })

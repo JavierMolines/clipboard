@@ -6,7 +6,6 @@ import { OPTIONS_BUTTON_CHECK } from "src/app/constants/main";
 
 @Component({
 	selector: "app-create",
-	standalone: true,
 	imports: [ReactiveFormsModule],
 	templateUrl: "./create.component.html",
 })

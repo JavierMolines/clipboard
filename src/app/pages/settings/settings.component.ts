@@ -4,7 +4,6 @@ import { OPTIONS_BUTTON_CHECK } from "src/app/constants/main";
 
 @Component({
 	selector: "app-settings",
-	standalone: true,
 	imports: [],
 	templateUrl: "./settings.component.html",
 })

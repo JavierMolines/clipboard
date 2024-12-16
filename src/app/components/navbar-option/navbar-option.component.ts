@@ -4,7 +4,6 @@ import { IconsComponent } from "@components/icons/icons.component";
 
 @Component({
 	selector: "app-navbar-option",
-	standalone: true,
 	imports: [RouterLinkWithHref, IconsComponent],
 	templateUrl: "./navbar-option.component.html",
 })

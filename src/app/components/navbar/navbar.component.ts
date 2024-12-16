@@ -8,7 +8,6 @@ import { options } from "./navbar.data";
 
 @Component({
 	selector: "app-navbar",
-	standalone: true,
 	imports: [RouterModule, NavbarOptionComponent, IconsComponent],
 	templateUrl: "./navbar.component.html",
 })

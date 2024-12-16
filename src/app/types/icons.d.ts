@@ -5,4 +5,5 @@ type ValidIcons =
 	| "create"
 	| "document"
 	| "github"
-	| "delete";
+	| "delete"
+	| "storage";

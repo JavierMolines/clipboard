@@ -5,7 +5,6 @@ import { UtilityStorage } from "@utils/storage/index.storage";
 
 @Component({
 	selector: "app-list",
-	standalone: true,
 	imports: [ClipboardListComponent, CreateItemClipComponent],
 	templateUrl: "./list.component.html",
 })

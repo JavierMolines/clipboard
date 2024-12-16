@@ -27,7 +27,9 @@
 			"./build/**",
 			"./dist/**",
 			"./.angular/**",
-			"./binary.min.js"
+			"./binary.min.js",
+			"./package.json",
+			"./package-lock.json"
 		]
 	}
 }
