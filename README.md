@@ -9,22 +9,16 @@ First, clone the repo and cd into the project:
 
 ## Local setup
 
-Install Angular CLI
-
-```bash
-npm install -g @angular/cli
-```
-
-Verify install
-
-```bash
-ng version
-```
-
 Install dependencies
 
 ```bash
 npm i
+```
+
+Run angular/cli command
+
+```bash
+npm run ng
 ```
 
 ## Run locally
