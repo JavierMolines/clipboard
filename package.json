@@ -1,6 +1,7 @@
 {
   "name": "clipboard",
   "version": "0.0.0",
+  "private": true,
   "scripts": {
     "ng": "ng",
     "dev": "ng serve",
@@ -13,7 +14,6 @@
     "lint:all": "npm run lint:prettier && npm run lint:fix",
     "serve:ssr:clipboard": "node dist/clipboard/server/server.mjs"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "^18.2.10",
     "@angular/common": "^18.2.10",
