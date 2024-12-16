@@ -3,10 +3,9 @@ import { IconsComponent } from "@components/icons/icons.component";
 import { UtilityStorage } from "@utils/storage/index.storage";
 
 @Component({
-	selector: "app-clipboard-card",
-	standalone: true,
-	imports: [IconsComponent],
-	templateUrl: "./clipboard-card.component.html",
+    selector: "app-clipboard-card",
+    imports: [IconsComponent],
+    templateUrl: "./clipboard-card.component.html"
 })
 export class ClipboardCardComponent {
 	@Input({ required: true }) id = "";

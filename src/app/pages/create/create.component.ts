@@ -5,10 +5,9 @@ import { UtilityStorage } from "@utils/storage/index.storage";
 import { OPTIONS_BUTTON_CHECK } from "src/app/constants/main";
 
 @Component({
-	selector: "app-create",
-	standalone: true,
-	imports: [ReactiveFormsModule],
-	templateUrl: "./create.component.html",
+    selector: "app-create",
+    imports: [ReactiveFormsModule],
+    templateUrl: "./create.component.html"
 })
 export default class CreateComponent implements AfterViewInit {
 	idTextInput = "clipboardArea";
