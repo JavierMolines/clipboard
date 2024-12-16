@@ -7,9 +7,9 @@ import { OPTIONS_BUTTON_CHECK } from "src/app/constants/main";
 import { options } from "./navbar.data";
 
 @Component({
-    selector: "app-navbar",
-    imports: [RouterModule, NavbarOptionComponent, IconsComponent],
-    templateUrl: "./navbar.component.html"
+	selector: "app-navbar",
+	imports: [RouterModule, NavbarOptionComponent, IconsComponent],
+	templateUrl: "./navbar.component.html",
 })
 export default class NavbarComponent {
 	MENU_OPTIONS = options;

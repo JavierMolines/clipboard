@@ -3,9 +3,9 @@ import { ClipboardCardComponent } from "@components/clipboard-card/clipboard-car
 import { UtilityStorage } from "@utils/storage/index.storage";
 
 @Component({
-    selector: "app-clipboard-list",
-    imports: [ClipboardCardComponent],
-    templateUrl: "./clipboard-list.component.html"
+	selector: "app-clipboard-list",
+	imports: [ClipboardCardComponent],
+	templateUrl: "./clipboard-list.component.html",
 })
 export class ClipboardListComponent {
 	currentPage = signal(1);

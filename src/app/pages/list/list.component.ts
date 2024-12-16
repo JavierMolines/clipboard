@@ -4,9 +4,9 @@ import { CreateItemClipComponent } from "@components/create-item-clip/create-ite
 import { UtilityStorage } from "@utils/storage/index.storage";
 
 @Component({
-    selector: "app-list",
-    imports: [ClipboardListComponent, CreateItemClipComponent],
-    templateUrl: "./list.component.html"
+	selector: "app-list",
+	imports: [ClipboardListComponent, CreateItemClipComponent],
+	templateUrl: "./list.component.html",
 })
 export default class ListComponent {
 	hasItems = UtilityStorage.getMappingClipboardItems().length;
