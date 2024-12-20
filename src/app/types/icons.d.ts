@@ -7,4 +7,5 @@ type ValidIcons =
 	| "github"
 	| "delete"
 	| "storage"
-	| "external-link";
+	| "external-link"
+	| "jsonandbase64";

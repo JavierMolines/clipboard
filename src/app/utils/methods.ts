@@ -1,4 +1,4 @@
-const makeId = () => {
+export const makeId = () => {
 	const validCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 	let keyGen = "";
 	for (let i = 0; i < 20; i++) {
@@ -8,4 +8,13 @@ const makeId = () => {
 	return keyGen;
 };
 
-export { makeId };
+export const copyClipboard = (data: string) => {
+	navigator.clipboard
+		.writeText(data)
+		.then(() => {
+			console.log("Copy finish");
+		})
+		.catch((err) => {
+			console.error("Error copy", err);
+		});
+};

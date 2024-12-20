@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { IconsComponent } from "@components/icons/icons.component";
+import { copyClipboard } from "@utils/methods";
 import { UtilityStorage } from "@utils/storage/index.storage";
 
 @Component({
@@ -26,14 +27,7 @@ export class ClipboardCardComponent implements OnInit {
 	}
 
 	loadClipboard(data: string) {
-		navigator.clipboard
-			.writeText(data)
-			.then(() => {
-				console.log("Copy finish");
-			})
-			.catch((err) => {
-				console.error("Error copy", err);
-			});
+		copyClipboard(data);
 	}
 
 	assignUrlOption() {
