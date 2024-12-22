@@ -2,13 +2,29 @@
   <h1 class="text-2xl">JSON parser and Base64 handler</h1>
 
   <div class="mt-6 flex flex-col mb-4 lg:flex-row">
-    <textarea
+    <article
       id="{{ tai }}"
-      (input)="onChangeTextArea()"
-      class="flex-auto font-mono border-2 border-gray-400 resize-none h-[300px] lg:h-[500px] 2xl:h-[700px]"
-    ></textarea>
+      class="w-[100%] lg:w-[40%] overflow-auto border-2 border-gray-400 h-[300px] lg:h-[520px] 2xl:h-[710px]"
+    ></article>
 
-    <div class="w-[200px] h-full p-5 flex flex-col gap-4 self-center">
+    <div class="w-[100%] lg:w-[20%] h-full p-5 flex flex-col gap-4 self-center">
+      <p class="text-center">Handler Text (right panel)</p>
+
+      <button
+        (click)="onClickCopyClipboard()"
+        class="p-2 cursor-pointer bg-orange-300 hover:bg-orange-400 rounded-lg"
+      >
+        Copy Clipboard
+      </button>
+
+      <button
+        (click)="onClickMoveText()"
+        class="p-2 cursor-pointer bg-orange-300 hover:bg-orange-400 rounded-lg"
+      >
+        Move Left
+      </button>
+      <p class="text-center">Base64</p>
+
       <button
         (click)="onClickDecode()"
         class="p-2 cursor-pointer bg-orange-300 hover:bg-orange-400 rounded-lg"
@@ -20,13 +36,6 @@
         class="p-2 cursor-pointer bg-orange-300 hover:bg-orange-400 rounded-lg"
       >
         Encode
-      </button>
-
-      <button
-        (click)="onClickCopyClipboard()"
-        class="p-2 cursor-pointer bg-orange-300 hover:bg-orange-400 rounded-lg"
-      >
-        Copy Clipboard
       </button>
 
       <p class="text-center">
@@ -49,9 +58,9 @@
       </button>
     </div>
 
-    <textarea
+    <article
       id="{{ tao }}"
-      class="flex-auto font-mono border-2 border-gray-400 resize-none h-[300px] lg:h-[500px] 2xl:h-[700px]"
-    ></textarea>
+      class="w-[100%] lg:w-[40%] overflow-auto border-2 border-gray-400 h-[300px] lg:h-[520px] 2xl:h-[710px]"
+    ></article>
   </div>
 </main>

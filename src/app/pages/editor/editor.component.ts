@@ -1,20 +1,39 @@
-import { Component, signal } from "@angular/core";
+import {
+	AfterViewInit,
+	Component,
+	Inject,
+	PLATFORM_ID,
+	signal,
+} from "@angular/core";
+
+import { isPlatformBrowser } from "@angular/common";
+import { json } from "@codemirror/lang-json";
+import { EditorState, Extension } from "@codemirror/state";
+import { oneDark } from "@codemirror/theme-one-dark";
 import { copyClipboard } from "@utils/methods";
+import { EditorView, basicSetup } from "codemirror";
 
 @Component({
 	selector: "app-settings",
 	imports: [],
 	templateUrl: "./editor.component.html",
 })
-export default class EditorComponent {
-	jsonValid = signal(false);
+export default class EditorComponent implements AfterViewInit {
+	// biome-ignore lint/complexity/noBannedTypes: <explanation>
+	constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
 	tai = "tain";
 	tao = "taou";
+
+	jsonValid = signal(false);
+
 	buttonsJson = {
 		min: "button-minify",
 		beu: "button-beutify",
 	};
+
+	private editorInput!: EditorView;
+	private editorOutput!: EditorView;
 
 	private encode(input: string) {
 		const utf8Bytes = new TextEncoder().encode(input);
@@ -33,46 +52,52 @@ export default class EditorComponent {
 		return document.getElementById(id) as HTMLTextAreaElement;
 	}
 
-	private handlerParser(flow: "decode" | "encode") {
-		const input = this.getDomTextArea(this.tai);
+	private getTextToCodeMirror(editor: EditorView) {
+		return editor.state.doc.toString();
+	}
 
-		if (input.value.trim() === "") {
+	private writeInEditor(editor: EditorView, content: string) {
+		editor.dispatch({
+			changes: {
+				from: 0,
+				to: editor.state.doc.length,
+				insert: content,
+			},
+		});
+	}
+
+	private handlerParser(flow: "decode" | "encode") {
+		const value = this.getTextToCodeMirror(this.editorInput);
+
+		if (value.trim() === "") {
 			alert("Insert text..");
 			return;
 		}
 
-		const value = input.value;
-		const encode = flow === "encode" ? this.encode(value) : this.decode(value);
-		const output = this.getDomTextArea(this.tao);
-
-		output.value = encode;
+		const result = flow === "encode" ? this.encode(value) : this.decode(value);
+		this.writeInEditor(this.editorOutput, result);
 	}
 
 	private handlerJsonMethods(flow: "minify" | "clean") {
-		if (!this.jsonValid()) {
-			return;
-		}
+		if (!this.jsonValid()) return;
 
 		try {
-			const input = this.getDomTextArea(this.tai);
-			const output = this.getDomTextArea(this.tao);
-			const json = JSON.parse(input.value);
-
+			const input = this.getTextToCodeMirror(this.editorInput);
+			const json = JSON.parse(input);
 			const format =
 				flow === "clean"
 					? JSON.stringify(json, null, "\t")
 					: JSON.stringify(json);
 
-			output.value = format;
+			this.writeInEditor(this.editorOutput, format);
 		} catch (error) {}
 	}
 
-	onChangeTextArea() {
-		const input = this.getDomTextArea(this.tai);
+	private validEventChangeTextCodeMirror(content: string) {
 		const buttonsJson = document.querySelectorAll(".to-json");
 
 		try {
-			JSON.parse(input.value);
+			JSON.parse(content);
 			this.jsonValid.set(true);
 			for (let index = 0; index < buttonsJson.length; index++) {
 				const button = buttonsJson[index] as HTMLButtonElement;
@@ -93,14 +118,56 @@ export default class EditorComponent {
 		}
 	}
 
-	onClickCopyClipboard() {
+	private loadConfigEditor(optionalPlugins: Array<Extension>) {
+		return EditorState.create({
+			extensions: [
+				basicSetup,
+				oneDark,
+				json(),
+				EditorView.lineWrapping,
+				...optionalPlugins,
+			],
+		});
+	}
+
+	private loadEditorsInView() {
+		const input = this.getDomTextArea(this.tai);
 		const output = this.getDomTextArea(this.tao);
 
-		if (output.value.trim() === "") {
-			return;
-		}
+		if (!input || !output) return;
 
-		copyClipboard(output.value);
+		const updateListener = EditorView.updateListener.of((update) => {
+			if (!update.docChanged) return;
+			const content = update.state.doc.toString();
+			this.validEventChangeTextCodeMirror(content);
+		});
+
+		this.editorInput = new EditorView({
+			state: this.loadConfigEditor([updateListener]),
+			parent: input,
+		});
+
+		this.editorOutput = new EditorView({
+			state: this.loadConfigEditor([]),
+			parent: output,
+		});
+	}
+
+	ngAfterViewInit(): void {
+		if (!isPlatformBrowser(this.platformId)) return;
+		this.loadEditorsInView();
+	}
+
+	onClickMoveText() {
+		const value = this.getTextToCodeMirror(this.editorOutput);
+		if (value.trim() === "") return;
+		this.writeInEditor(this.editorInput, value);
+	}
+
+	onClickCopyClipboard() {
+		const value = this.getTextToCodeMirror(this.editorOutput);
+		if (value.trim() === "") return;
+		copyClipboard(value);
 	}
 
 	onClickEncode() {
