@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { IconsComponent } from "@components/icons/icons.component";
+import { copyClipboard } from "@utils/methods";
 import { UtilityStorage } from "@utils/storage/index.storage";
 
 @Component({
@@ -7,13 +8,15 @@ import { UtilityStorage } from "@utils/storage/index.storage";
 	imports: [IconsComponent],
 	templateUrl: "./clipboard-card.component.html",
 })
-export class ClipboardCardComponent {
+export class ClipboardCardComponent implements OnInit {
 	@Input({ required: true }) id = "";
 	@Input({ required: true }) time = "";
 	@Input({ required: true }) data = "";
 	@Input({ required: true }) title = "";
 
 	@Output() updateListItems = new EventEmitter();
+
+	urlContent = "";
 
 	deleteItem(event: Event, key: string) {
 		event.stopPropagation();
@@ -24,13 +27,20 @@ export class ClipboardCardComponent {
 	}
 
 	loadClipboard(data: string) {
-		navigator.clipboard
-			.writeText(data)
-			.then(() => {
-				console.log("Copy finish");
-			})
-			.catch((err) => {
-				console.error("Error copy", err);
-			});
+		copyClipboard(data);
+	}
+
+	assignUrlOption() {
+		const regex =
+			/^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/.*)?$/;
+		const isUrl = regex.test(this.data);
+
+		if (!isUrl) return;
+
+		this.urlContent = this.data;
+	}
+
+	ngOnInit(): void {
+		this.assignUrlOption();
 	}
 }

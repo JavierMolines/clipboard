@@ -13,6 +13,11 @@ export const options: IOptionsNavbar = {
 	],
 	bottom: [
 		{
+			img: "jsonandbase64",
+			title: "JSON / Base64",
+			link: "/editor",
+		},
+		{
 			img: "storage",
 			title: "Storage",
 			link: "/storage",

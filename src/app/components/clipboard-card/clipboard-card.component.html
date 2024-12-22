@@ -17,4 +17,16 @@
   >
     <app-icons name="delete" color="#580f0f" />
   </button>
+
+  @if (urlContent !== "") {
+    <a
+      onclick="event.stopPropagation();"
+      [href]="urlContent"
+      target="_blank"
+      class="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-200 top-12 right-1.5 p-0.5 rounded-lg hover:bg-white"
+      aria-label="Open Url Card"
+    >
+      <app-icons name="external-link" color="#580f0f" />
+    </a>
+  }
 </div>
