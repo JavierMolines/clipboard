@@ -1,13 +1,14 @@
-<main>
+<main class="h-full">
   <h1 class="text-2xl">JSON parser and Base64 handler</h1>
 
-  <div class="mt-6 flex flex-col mb-4 lg:flex-row">
+  <div class="mt-6 flex flex-col mb-4 lg:flex-row h-[90%]">
     <article
       id="{{ tai }}"
-      class="w-[100%] lg:w-[40%] overflow-auto border-2 border-gray-400 h-[300px] lg:h-[520px] 2xl:h-[710px]"
+      style="flex: 1; min-height: 300px"
+      class="w-[100%] lg:w-[40%] overflow-auto border-2 border-gray-400"
     ></article>
 
-    <div class="w-[100%] lg:w-[20%] h-full p-5 flex flex-col gap-4 self-center">
+    <div class="w-[100%] lg:w-[20%] p-5 flex flex-col gap-4 self-center">
       <p class="text-center">Handler Text (right panel)</p>
 
       <button
@@ -60,7 +61,8 @@
 
     <article
       id="{{ tao }}"
-      class="w-[100%] lg:w-[40%] overflow-auto border-2 border-gray-400 h-[300px] lg:h-[520px] 2xl:h-[710px]"
+      style="flex: 1; min-height: 300px"
+      class="w-[100%] lg:w-[40%] overflow-auto border-2 border-gray-400"
     ></article>
   </div>
 </main>
