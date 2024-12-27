@@ -1,5 +1,7 @@
 import type { Routes } from "@angular/router";
 import NavbarComponent from "@components/navbar/navbar.component";
+import CreateComponent from "@pages/create/create.component";
+import ListComponent from "@pages/list/list.component";
 
 export const routes: Routes = [
 	{
@@ -8,7 +10,7 @@ export const routes: Routes = [
 		children: [
 			{
 				path: "",
-				loadComponent: () => import("@pages/list/list.component"),
+				component: ListComponent,
 				data: {
 					title: "Clipboard",
 					description:
@@ -17,7 +19,7 @@ export const routes: Routes = [
 			},
 			{
 				path: "create",
-				loadComponent: () => import("@pages/create/create.component"),
+				component: CreateComponent,
 				data: {
 					title: "Clipboard - create",
 					description: "Create clipboard to later access from the main manager",
