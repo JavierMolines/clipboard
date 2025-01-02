@@ -10,7 +10,7 @@ import { isPlatformBrowser } from "@angular/common";
 import { json } from "@codemirror/lang-json";
 import { EditorState, Extension } from "@codemirror/state";
 import { oneDark } from "@codemirror/theme-one-dark";
-import { copyClipboard } from "@utils/methods";
+import { copyClipboard, toggleButtonsStylesOptions } from "@utils/methods";
 import { EditorView, basicSetup } from "codemirror";
 
 @Component({
@@ -93,28 +93,32 @@ export default class EditorComponent implements AfterViewInit {
 		} catch (error) {}
 	}
 
+	private handlerButtonsRightPanel(flow: "copy" | "move") {
+		const value = this.getTextToCodeMirror(this.editorOutput);
+		if (value.trim() === "") return;
+
+		if (flow === "copy") {
+			copyClipboard(value);
+		} else {
+			this.writeInEditor(this.editorInput, value);
+		}
+	}
+
 	private validEventChangeTextCodeMirror(content: string) {
 		const buttonsJson = document.querySelectorAll(".to-json");
 
 		try {
 			JSON.parse(content);
+
+			if (this.jsonValid()) return; // Not reprocess same flow
+
 			this.jsonValid.set(true);
-			for (let index = 0; index < buttonsJson.length; index++) {
-				const button = buttonsJson[index] as HTMLButtonElement;
-				button.classList.remove("bg-gray-300");
-				button.classList.add("bg-orange-300");
-				button.classList.add("hover:bg-orange-400");
-				button.classList.add("cursor-pointer");
-			}
+			toggleButtonsStylesOptions(buttonsJson, true);
 		} catch (error) {
+			if (!this.jsonValid()) return; // Not reprocess same flow
+
 			this.jsonValid.set(false);
-			for (let index = 0; index < buttonsJson.length; index++) {
-				const button = buttonsJson[index] as HTMLButtonElement;
-				button.classList.remove("bg-orange-300");
-				button.classList.remove("hover:bg-orange-400");
-				button.classList.add("bg-gray-300");
-				button.classList.remove("cursor-pointer");
-			}
+			toggleButtonsStylesOptions(buttonsJson, false);
 		}
 	}
 
@@ -159,15 +163,11 @@ export default class EditorComponent implements AfterViewInit {
 	}
 
 	onClickMoveText() {
-		const value = this.getTextToCodeMirror(this.editorOutput);
-		if (value.trim() === "") return;
-		this.writeInEditor(this.editorInput, value);
+		this.handlerButtonsRightPanel("move");
 	}
 
 	onClickCopyClipboard() {
-		const value = this.getTextToCodeMirror(this.editorOutput);
-		if (value.trim() === "") return;
-		copyClipboard(value);
+		this.handlerButtonsRightPanel("copy");
 	}
 
 	onClickEncode() {
