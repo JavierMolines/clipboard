@@ -1,7 +1,10 @@
 import type { Routes } from "@angular/router";
 import NavbarComponent from "@components/navbar/navbar.component";
+import NotFoundComponent from "@pages/404/404.component";
 import CreateComponent from "@pages/create/create.component";
 import ListComponent from "@pages/list/list.component";
+import SettingsComponent from "@pages/settings/settings.component";
+import StorageComponent from "@pages/storage/storage.component";
 
 export const routes: Routes = [
 	{
@@ -27,7 +30,7 @@ export const routes: Routes = [
 			},
 			{
 				path: "settings",
-				loadComponent: () => import("@pages/settings/settings.component"),
+				component: SettingsComponent,
 				data: {
 					title: "Clipboard - settings",
 					description: "Configure how you would like to use the manager",
@@ -35,26 +38,17 @@ export const routes: Routes = [
 			},
 			{
 				path: "storage",
-				loadComponent: () => import("@pages/storage/storage.component"),
+				component: StorageComponent,
 				data: {
 					title: "Clipboard - storage",
 					description: "Back up or import your saved data",
-				},
-			},
-			{
-				path: "editor",
-				loadComponent: () => import("@pages/editor/editor.component"),
-				data: {
-					title: "Clipboard - editor",
-					description:
-						"Use the editor to manage different protocols for data management",
 				},
 			},
 		],
 	},
 	{
 		path: "not-found",
-		loadComponent: () => import("@pages/404/404.component"),
+		component: NotFoundComponent,
 		data: { title: "Clipboard - not found", description: "Page not found" },
 	},
 	{
