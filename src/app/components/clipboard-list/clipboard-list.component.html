@@ -69,7 +69,7 @@
   <div
     class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
   >
-    @for (item of viewItems(); track item.time) {
+    @for (item of viewItems(); track item.id) {
       <app-clipboard-card
         [time]="item.time"
         [id]="item.id"
