@@ -16,10 +16,38 @@ export class ClipboardCardComponent implements OnInit {
 
 	@Output() updateListItems = new EventEmitter();
 
-	urlContent = "";
+	DEFAULT_COLOR = "bg-orange-200 hover:bg-orange-300";
+	NEW_COLOR = "bg-green-200 hover:bg-green-300";
 
-	deleteItem(event: Event, key: string) {
-		event.stopPropagation();
+	delay = 200;
+	urlContent = "";
+	prefix = "view_paper_";
+	delayAnimation = false;
+
+	private getPaper() {
+		return document.getElementById(this.prefix + this.id) as HTMLDivElement;
+	}
+
+	private changeBgColor() {
+		const replaceClassName = (
+			container: HTMLDivElement,
+			target: string,
+			replacer: string,
+		) => {
+			container.className = container.className.replaceAll(target, replacer);
+		};
+
+		const container = this.getPaper();
+		replaceClassName(container, this.DEFAULT_COLOR, this.NEW_COLOR);
+
+		setTimeout(() => {
+			replaceClassName(container, this.NEW_COLOR, this.DEFAULT_COLOR);
+			this.delayAnimation = false;
+		}, this.delay);
+	}
+
+	deleteItem(_: Event, key: string) {
+		console.log("Delete paper");
 		const newList = UtilityStorage.addMapperClipboardItems(
 			UtilityStorage.deleteItemLocalStorage(key),
 		);
@@ -28,6 +56,13 @@ export class ClipboardCardComponent implements OnInit {
 
 	loadClipboard(data: string) {
 		copyClipboard(data);
+
+		if (this.delayAnimation) {
+			return;
+		}
+
+		this.delayAnimation = true;
+		this.changeBgColor();
 	}
 
 	assignUrlOption() {

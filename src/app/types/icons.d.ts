@@ -8,4 +8,5 @@ type ValidIcons =
 	| "delete"
 	| "storage"
 	| "external-link"
-	| "jsonandbase64";
+	| "jsonandbase64"
+	| "confirm-delete";
