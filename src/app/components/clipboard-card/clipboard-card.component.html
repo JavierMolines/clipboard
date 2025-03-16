@@ -1,7 +1,8 @@
 <div
+  id="{{ prefix + id }}"
   (click)="loadClipboard(data)"
   style="scrollbar-width: none"
-  class="select-none relative break-words cursor-pointer group bg-orange-200 hover:bg-orange-300 pl-4 pr-8 py-2.5 rounded-lg overflow-ellipsis overflow-y-scroll h-[160px] transition-all duration-200"
+  class="select-none relative bg-orange-200 hover:bg-orange-300 break-words transition-all duration-200 cursor-pointer group pl-4 pr-8 py-2.5 rounded-lg overflow-ellipsis overflow-y-scroll h-[160px]"
 >
   @if (title !== "") {
     <h3 class="text-lg font-semibold">{{ title }}</h3>
@@ -9,13 +10,20 @@
 
   <span class="text-gray-700 text-xs">{{ time }}</span>
   <p>{{ data }}</p>
+
   <button
     type="button"
-    class="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-200 top-3 right-1.5 p-0.5 rounded-lg hover:bg-white"
+    class="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-200 top-3 right-1.5 p-0.5 rounded-lg hover:bg-white focus:outline-none group"
     aria-label="Delete card"
-    (click)="deleteItem($event, id)"
+    (click)="$event.stopPropagation()"
   >
-    <app-icons name="delete" color="#580f0f" />
+    <span class="group-focus:hidden">
+      <app-icons name="delete" color="#580f0f" />
+    </span>
+
+    <span class="hidden group-focus:block" (click)="deleteItem($event, id)">
+      <app-icons name="confirm-delete" color="#580f0f" />
+    </span>
   </button>
 
   @if (urlContent !== "") {
