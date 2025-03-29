@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import {
+	ChangeDetectionStrategy,
+	Component,
+	EventEmitter,
+	Input,
+	OnInit,
+	Output,
+} from "@angular/core";
 import { IconsComponent } from "@components/icons/icons.component";
 import { copyClipboard } from "@utils/methods";
 import { UtilityStorage } from "@utils/storage/index.storage";
@@ -7,6 +14,7 @@ import { UtilityStorage } from "@utils/storage/index.storage";
 	selector: "app-clipboard-card",
 	imports: [IconsComponent],
 	templateUrl: "./clipboard-card.component.html",
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClipboardCardComponent implements OnInit {
 	@Input({ required: true }) id = "";

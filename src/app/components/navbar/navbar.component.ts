@@ -1,4 +1,10 @@
-import { Component, ElementRef, ViewChild } from "@angular/core";
+import {
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
+	Component,
+	ElementRef,
+	ViewChild,
+} from "@angular/core";
 import { NavigationEnd, Router, RouterModule } from "@angular/router";
 import { IconsComponent } from "@components/icons/icons.component";
 import { NavbarOptionComponent } from "@components/navbar-option/navbar-option.component";
@@ -10,6 +16,7 @@ import { options } from "./navbar.data";
 	selector: "app-navbar",
 	imports: [RouterModule, NavbarOptionComponent, IconsComponent],
 	templateUrl: "./navbar.component.html",
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class NavbarComponent {
 	MENU_OPTIONS = options;

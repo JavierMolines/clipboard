@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
 import { RouterLinkWithHref } from "@angular/router";
 import { IconsComponent } from "@components/icons/icons.component";
 
@@ -6,6 +6,7 @@ import { IconsComponent } from "@components/icons/icons.component";
 	selector: "app-navbar-option",
 	imports: [RouterLinkWithHref, IconsComponent],
 	templateUrl: "./navbar-option.component.html",
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavbarOptionComponent {
 	@Input({ required: true }) link = "";

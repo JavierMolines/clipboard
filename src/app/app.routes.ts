@@ -1,10 +1,5 @@
 import type { Routes } from "@angular/router";
 import NavbarComponent from "@components/navbar/navbar.component";
-import NotFoundComponent from "@pages/404/404.component";
-import CreateComponent from "@pages/create/create.component";
-import ListComponent from "@pages/list/list.component";
-import SettingsComponent from "@pages/settings/settings.component";
-import StorageComponent from "@pages/storage/storage.component";
 
 export const routes: Routes = [
 	{
@@ -13,7 +8,8 @@ export const routes: Routes = [
 		children: [
 			{
 				path: "",
-				component: ListComponent,
+				loadComponent: () =>
+					import("@pages/list/list.component").then((m) => m.default),
 				data: {
 					title: "Clipboard",
 					description:
@@ -22,7 +18,8 @@ export const routes: Routes = [
 			},
 			{
 				path: "create",
-				component: CreateComponent,
+				loadComponent: () =>
+					import("@pages/create/create.component").then((m) => m.default),
 				data: {
 					title: "Clipboard - create",
 					description: "Create clipboard to later access from the main manager",
@@ -30,7 +27,8 @@ export const routes: Routes = [
 			},
 			{
 				path: "settings",
-				component: SettingsComponent,
+				loadComponent: () =>
+					import("@pages/settings/settings.component").then((m) => m.default),
 				data: {
 					title: "Clipboard - settings",
 					description: "Configure how you would like to use the manager",
@@ -38,7 +36,8 @@ export const routes: Routes = [
 			},
 			{
 				path: "storage",
-				component: StorageComponent,
+				loadComponent: () =>
+					import("@pages/storage/storage.component").then((m) => m.default),
 				data: {
 					title: "Clipboard - storage",
 					description: "Back up or import your saved data",
@@ -48,7 +47,8 @@ export const routes: Routes = [
 	},
 	{
 		path: "not-found",
-		component: NotFoundComponent,
+		loadComponent: () =>
+			import("@pages/404/404.component").then((m) => m.default),
 		data: { title: "Clipboard - not found", description: "Page not found" },
 	},
 	{
