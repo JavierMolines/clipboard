@@ -1,4 +1,4 @@
-import { Component, signal } from "@angular/core";
+import { ChangeDetectionStrategy, Component, signal } from "@angular/core";
 import { ClipboardCardComponent } from "@components/clipboard-card/clipboard-card.component";
 import { UtilityStorage } from "@utils/storage/index.storage";
 
@@ -6,6 +6,7 @@ import { UtilityStorage } from "@utils/storage/index.storage";
 	selector: "app-clipboard-list",
 	imports: [ClipboardCardComponent],
 	templateUrl: "./clipboard-list.component.html",
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClipboardListComponent {
 	currentPage = signal(1);
