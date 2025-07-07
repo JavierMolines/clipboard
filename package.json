@@ -15,25 +15,27 @@
     "serve:ssr:clipboard": "node dist/clipboard/server/server.mjs"
   },
   "dependencies": {
-    "@angular/animations": "^19.2.4",
-    "@angular/common": "^19.2.4",
-    "@angular/compiler": "^19.2.4",
-    "@angular/core": "^19.2.4",
-    "@angular/forms": "^19.2.4",
-    "@angular/platform-browser": "^19.2.4",
-    "@angular/platform-browser-dynamic": "^19.2.4",
-    "@angular/platform-server": "^19.2.4",
-    "@angular/router": "^19.2.4",
-    "@angular/ssr": "^19.2.5",
+    "@angular/animations": "^20.0.6",
+    "@angular/common": "^20.0.6",
+    "@angular/compiler": "^20.0.6",
+    "@angular/core": "^20.0.6",
+    "@angular/forms": "^20.0.6",
+    "@angular/platform-browser": "^20.0.6",
+    "@angular/platform-browser-dynamic": "^20.0.6",
+    "@angular/platform-server": "^20.0.6",
+    "@angular/router": "^20.0.6",
+    "@angular/ssr": "^20.0.5",
+    "tailwindcss": "4.1.11",
+    "@tailwindcss/postcss": "^4.1.11",
     "express": "^4.21.2",
     "rxjs": "~7.8.2",
     "tslib": "^2.8.1",
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^19.2.5",
-    "@angular/cli": "^19.2.5",
-    "@angular/compiler-cli": "^19.2.4",
+    "@angular/build": "^20.0.5",
+    "@angular/cli": "^20.0.5",
+    "@angular/compiler-cli": "^20.0.6",
     "@biomejs/biome": "1.9.4",
     "@types/express": "^5.0.0",
     "@types/jasmine": "~5.1.7",
@@ -45,9 +47,8 @@
     "karma-coverage": "~2.2.1",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "postcss": "8.5.3",
-    "prettier": "3.5.3",
-    "tailwindcss": "3.4.17",
-    "typescript": "5.8.2"
+    "postcss": "^8.5.6",
+    "prettier": "3.6.2",
+    "typescript": "5.8.3"
   }
 }
