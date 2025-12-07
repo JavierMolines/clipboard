@@ -1,5 +1,5 @@
 import {
-	type ApplicationConfig,
+	ApplicationConfig,
 	provideZonelessChangeDetection,
 } from "@angular/core";
 
@@ -7,5 +7,11 @@ import { provideRouter } from "@angular/router";
 import { routes } from "./app.routes";
 
 export const appConfig: ApplicationConfig = {
-	providers: [provideZonelessChangeDetection(), provideRouter(routes)],
+	providers: [
+		// 🚀 Zoneless moderno
+		provideZonelessChangeDetection(),
+
+		// 🔁 Router moderno
+		provideRouter(routes),
+	],
 };
