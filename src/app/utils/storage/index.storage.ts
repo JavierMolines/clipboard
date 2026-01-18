@@ -1,12 +1,12 @@
 import { ID_CLIPBOARDS_ITEMS } from "src/app/constants/main";
 import { makeId } from "../methods";
 
-// biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
+// biome-ignore lint/complexity/noStaticOnlyClass: it necesary
 export class UtilityStorage {
 	static getOptionSettingsStorage(key: string): SettingsOptions {
 		try {
 			return JSON.parse(localStorage.getItem(key) ?? "");
-		} catch (error) {
+		} catch {
 			return {
 				value: "",
 			};
@@ -23,7 +23,7 @@ export class UtilityStorage {
 	static getMappingClipboardItems(): Array<string> {
 		try {
 			return JSON.parse(localStorage.getItem(ID_CLIPBOARDS_ITEMS) ?? "[]");
-		} catch (error) {
+		} catch {
 			return [];
 		}
 	}
@@ -49,7 +49,7 @@ export class UtilityStorage {
 			const newData = globalData.filter((item) => item !== key);
 			localStorage.setItem(ID_CLIPBOARDS_ITEMS, JSON.stringify(newData));
 			return newData;
-		} catch (error) {
+		} catch {
 			return [];
 		}
 	}
@@ -58,7 +58,7 @@ export class UtilityStorage {
 		try {
 			JSON.parse(localStorage.getItem(key) ?? "");
 			return true;
-		} catch (error) {
+		} catch {
 			return false;
 		}
 	}
@@ -66,7 +66,7 @@ export class UtilityStorage {
 	static addOptionSettingsStorage(key: string, data: SettingsOptions) {
 		try {
 			localStorage.setItem(key, JSON.stringify(data));
-		} catch (error) {}
+		} catch {}
 	}
 
 	static generateRecordClipboard(
@@ -95,7 +95,7 @@ export class UtilityStorage {
 			localStorage.setItem(keyGen, JSON.stringify(record));
 			UtilityStorage.addMappingLocalStorage(keyGen);
 			return true;
-		} catch (error) {
+		} catch {
 			return false;
 		}
 	}
@@ -105,6 +105,6 @@ export class UtilityStorage {
 			const globalData = UtilityStorage.getMappingClipboardItems();
 			globalData.unshift(key);
 			localStorage.setItem(ID_CLIPBOARDS_ITEMS, JSON.stringify(globalData));
-		} catch (error) {}
+		} catch {}
 	}
 }

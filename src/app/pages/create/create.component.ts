@@ -61,7 +61,7 @@ export default class CreateComponent implements AfterViewInit {
 				this.idTextInput,
 			) as HTMLTextAreaElement;
 			areaTextInput.focus();
-		} catch (error) {}
+		} catch {}
 	}
 
 	ngAfterViewInit() {

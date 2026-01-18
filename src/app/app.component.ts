@@ -1,8 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import { Title } from "@angular/platform-browser";
-import { Meta } from "@angular/platform-browser";
-import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
-import { RouterModule } from "@angular/router";
+import { Meta, Title } from "@angular/platform-browser";
+import {
+	ActivatedRoute,
+	NavigationEnd,
+	Router,
+	RouterModule,
+} from "@angular/router";
 
 @Component({
 	selector: "app-root",
@@ -18,8 +21,7 @@ export class AppComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-		// biome-ignore lint/complexity/noForEach: <explanation>
-		const events = this.router.events.forEach((event) => {
+		this.router.events.forEach((event) => {
 			if (event instanceof NavigationEnd) {
 				let currentRoute = this.activatedRoute;
 
