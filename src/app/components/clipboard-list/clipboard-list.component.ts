@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, signal } from "@angular/core";
+import {
+	ChangeDetectionStrategy,
+	Component,
+	computed,
+	ElementRef,
+	HostListener,
+	signal,
+	ViewChild,
+} from "@angular/core";
 import { ClipboardCardComponent } from "@components/clipboard-card/clipboard-card.component";
 import { UtilityStorage } from "@utils/storage/index.storage";
 
@@ -9,6 +17,7 @@ import { UtilityStorage } from "@utils/storage/index.storage";
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClipboardListComponent {
+	private itemsPerPage = 12;
 	currentPage = signal(1);
 	maxPages = signal(1);
 	viewItems = signal<Array<RecordClipboard>>([]);
@@ -17,14 +26,31 @@ export class ClipboardListComponent {
 			UtilityStorage.getMappingClipboardItems(),
 		),
 	);
+	handlerSearchContent = computed(
+		() => this.totalItems().length > this.itemsPerPage,
+	);
+
+	@ViewChild("searchContent") input!: ElementRef<HTMLInputElement>;
+
+	@HostListener("window:keydown", ["$event"])
+	onKeydown(event: KeyboardEvent) {
+		if (
+			event.ctrlKey &&
+			event.key.toLowerCase() === "k" &&
+			this.handlerSearchContent()
+		) {
+			event.preventDefault();
+			this.input.nativeElement.focus();
+		}
+	}
 
 	ngOnInit() {
 		this.maxPages.set(this.getMaxPages());
-		this.viewItems.set(this.totalItems().slice(0, 12));
+		this.viewItems.set(this.totalItems().slice(0, this.itemsPerPage));
 	}
 
 	getMaxPages() {
-		return Math.ceil(this.totalItems().length / 12);
+		return Math.ceil(this.totalItems().length / this.itemsPerPage);
 	}
 
 	nextPage() {
@@ -44,14 +70,14 @@ export class ClipboardListComponent {
 
 	movePage() {
 		const modifyCurrent = this.currentPage() - 1;
-		const initSection = modifyCurrent * 12;
-		const endSection = initSection + 12;
+		const initSection = modifyCurrent * this.itemsPerPage;
+		const endSection = initSection + this.itemsPerPage;
 		this.viewItems.set(this.totalItems().slice(initSection, endSection));
 	}
 
 	updateListItems(newList: Array<RecordClipboard>) {
 		this.totalItems.set(newList);
-		const newMaxPage = Math.ceil(newList.length / 12);
+		const newMaxPage = Math.ceil(newList.length / this.itemsPerPage);
 
 		if (this.currentPage() > newMaxPage) {
 			this.currentPage.set(newMaxPage);

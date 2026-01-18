@@ -107,4 +107,13 @@ export class UtilityStorage {
 			localStorage.setItem(ID_CLIPBOARDS_ITEMS, JSON.stringify(globalData));
 		} catch {}
 	}
+
+	static makeMocksLoadItems = () => {
+		const items = Array.from({ length: 100 }, () =>
+			Math.floor(Math.random() * 100).toString(),
+		);
+		for (const item of items) {
+			UtilityStorage.addLocalStorage(item, "");
+		}
+	};
 }

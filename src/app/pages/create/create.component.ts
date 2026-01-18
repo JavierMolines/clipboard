@@ -67,14 +67,4 @@ export default class CreateComponent implements AfterViewInit {
 	ngAfterViewInit() {
 		this.focusTextArea();
 	}
-
-	// Function to generate random data to localStorage
-	/* modelsLoadItems() {
-		const items = Array.from({ length: 100 }, () =>
-			Math.floor(Math.random() * 100).toString(),
-		);
-		for (const item of items) {
-			addLocalStorage(item);
-		}
-	} */
 }
