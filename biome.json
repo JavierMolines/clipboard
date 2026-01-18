@@ -25,6 +25,12 @@
 		}
 	},
 	"files": {
-		"includes": ["./.vscode/**", "./src/**/*.ts", "./*.json"]
+		"includes": [
+			"./.vscode/**",
+			"./src/**/*.ts",
+			"./*.json",
+			"./server.ts",
+			"./tailwind.config.js"
+		]
 	}
 }
