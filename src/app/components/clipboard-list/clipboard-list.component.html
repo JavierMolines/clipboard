@@ -65,6 +65,7 @@
       <div class="relative flex items-center">
         <input
           type="text"
+          (input)="onSearchContent()"
           #searchContent
           placeholder="Search..."
           class="peer p-1 pr-16 border border-gray-300 rounded w-full focus:outline-none"
@@ -93,17 +94,3 @@
     }
   </div>
 </section>
-
-<!--
-
-          @for (item of totalItems(); track $index) {
-            <li>
-              <button
-                href="#"
-                class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
-              >
-                {{ $count }}
-              </button>
-            </li>
-          }
--->

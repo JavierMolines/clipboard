@@ -18,6 +18,8 @@ import { UtilityStorage } from "@utils/storage/index.storage";
 })
 export class ClipboardListComponent {
 	private itemsPerPage = 12;
+
+	searchContent = signal("");
 	currentPage = signal(1);
 	maxPages = signal(1);
 	viewItems = signal<Array<RecordClipboard>>([]);
@@ -45,17 +47,18 @@ export class ClipboardListComponent {
 	}
 
 	ngOnInit() {
-		this.maxPages.set(this.getMaxPages());
-		this.viewItems.set(this.totalItems().slice(0, this.itemsPerPage));
+		const items = this.totalItems();
+		this.maxPages.set(this.getMaxPages(items));
+		this.viewItems.set(items.slice(0, this.itemsPerPage));
 	}
 
-	getMaxPages() {
-		return Math.ceil(this.totalItems().length / this.itemsPerPage);
+	getMaxPages(items: Array<RecordClipboard>): number {
+		return Math.ceil(items.length / this.itemsPerPage);
 	}
 
 	nextPage() {
 		const nextPage = this.currentPage() + 1;
-		const maxPage = this.getMaxPages();
+		const maxPage = this.maxPages();
 		const newPage = nextPage > maxPage ? maxPage : nextPage;
 		this.currentPage.set(newPage);
 		this.movePage();
@@ -69,21 +72,44 @@ export class ClipboardListComponent {
 	}
 
 	movePage() {
+		let items: Array<RecordClipboard> = [];
+		const value = this.searchContent();
+
+		if (value !== "") {
+			const regExp = new RegExp(this.searchContent(), "ig");
+			const validateExpressionMatch = (content: string) => regExp.test(content);
+			items = this.totalItems().filter(
+				(item) =>
+					validateExpressionMatch(item.data) ||
+					validateExpressionMatch(item.title),
+			);
+		} else {
+			items = this.totalItems();
+		}
+
 		const modifyCurrent = this.currentPage() - 1;
 		const initSection = modifyCurrent * this.itemsPerPage;
 		const endSection = initSection + this.itemsPerPage;
-		this.viewItems.set(this.totalItems().slice(initSection, endSection));
+		this.maxPages.set(this.getMaxPages(items));
+		this.viewItems.set(items.slice(initSection, endSection));
 	}
 
+	onSearchContent() {
+		const searchValue = this.input.nativeElement.value.toLowerCase().trim();
+		this.searchContent.set(searchValue);
+		this.currentPage.set(1);
+		this.movePage();
+	}
+
+	// Use: from ClipboardCardComponent
 	updateListItems(newList: Array<RecordClipboard>) {
 		this.totalItems.set(newList);
-		const newMaxPage = Math.ceil(newList.length / this.itemsPerPage);
+		const newMaxPage = this.getMaxPages(newList);
 
 		if (this.currentPage() > newMaxPage) {
 			this.currentPage.set(newMaxPage);
 		}
 
-		this.maxPages.set(newMaxPage);
 		this.movePage();
 	}
 }
