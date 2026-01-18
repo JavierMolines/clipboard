@@ -30,7 +30,8 @@
 			"./src/**/*.ts",
 			"./*.json",
 			"./server.ts",
-			"./tailwind.config.js"
+			"./tailwind.config.js",
+			"./renameIndex.js"
 		]
 	}
 }

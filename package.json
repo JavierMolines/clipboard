@@ -6,7 +6,7 @@
 		"ng": "ng",
 		"dev": "ng serve",
 		"dev:ssr": "node dist/clipboard/server/server.mjs",
-		"build": "ng build",
+		"build": "ng build && node renameIndex.js",
 		"watch": "ng build --watch --configuration development",
 		"test": "ng test",
 		"lint": "biome check .",
