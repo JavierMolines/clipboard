@@ -1,14 +1,18 @@
 {
 	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-	"organizeImports": {
-		"enabled": true
-	},
+	"assist": { "actions": { "source": { "organizeImports": "on" } } },
 	"linter": {
 		"enabled": true,
 		"rules": {
 			"recommended": true,
 			"complexity": {
-				"useLiteralKeys": "off"
+				"useLiteralKeys": "off",
+				"noExcessiveCognitiveComplexity": {
+					"level": "error",
+					"options": {
+						"maxAllowedComplexity": 15
+					}
+				}
 			},
 			"style": {
 				"useImportType": "off"
@@ -21,15 +25,13 @@
 		}
 	},
 	"files": {
-		"ignore": [
+		"includes": [
 			"./.vscode/**",
-			"./.husky/**",
-			"./build/**",
-			"./dist/**",
-			"./.angular/**",
-			"./binary.min.js",
-			"./package.json",
-			"./package-lock.json"
+			"./src/**/*.ts",
+			"./*.json",
+			"./server.ts",
+			"./tailwind.config.js",
+			"./renameIndex.js"
 		]
 	}
 }

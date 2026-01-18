@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, signal } from "@angular/core";
+import {
+	ChangeDetectionStrategy,
+	Component,
+	computed,
+	ElementRef,
+	HostListener,
+	signal,
+	ViewChild,
+} from "@angular/core";
 import { ClipboardCardComponent } from "@components/clipboard-card/clipboard-card.component";
 import { UtilityStorage } from "@utils/storage/index.storage";
 
@@ -9,6 +17,9 @@ import { UtilityStorage } from "@utils/storage/index.storage";
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClipboardListComponent {
+	private itemsPerPage = 12;
+
+	searchContent = signal("");
 	currentPage = signal(1);
 	maxPages = signal(1);
 	viewItems = signal<Array<RecordClipboard>>([]);
@@ -17,19 +28,37 @@ export class ClipboardListComponent {
 			UtilityStorage.getMappingClipboardItems(),
 		),
 	);
+	handlerSearchContent = computed(
+		() => this.totalItems().length > this.itemsPerPage,
+	);
 
-	ngOnInit() {
-		this.maxPages.set(this.getMaxPages());
-		this.viewItems.set(this.totalItems().slice(0, 12));
+	@ViewChild("searchContent") input!: ElementRef<HTMLInputElement>;
+
+	@HostListener("window:keydown", ["$event"])
+	onKeydown(event: KeyboardEvent) {
+		if (
+			event.ctrlKey &&
+			event.key.toLowerCase() === "k" &&
+			this.handlerSearchContent()
+		) {
+			event.preventDefault();
+			this.input.nativeElement.focus();
+		}
 	}
 
-	getMaxPages() {
-		return Math.ceil(this.totalItems().length / 12);
+	ngOnInit() {
+		const items = this.totalItems();
+		this.maxPages.set(this.getMaxPages(items));
+		this.viewItems.set(items.slice(0, this.itemsPerPage));
+	}
+
+	getMaxPages(items: Array<RecordClipboard>): number {
+		return Math.ceil(items.length / this.itemsPerPage);
 	}
 
 	nextPage() {
 		const nextPage = this.currentPage() + 1;
-		const maxPage = this.getMaxPages();
+		const maxPage = this.maxPages();
 		const newPage = nextPage > maxPage ? maxPage : nextPage;
 		this.currentPage.set(newPage);
 		this.movePage();
@@ -43,21 +72,44 @@ export class ClipboardListComponent {
 	}
 
 	movePage() {
+		let items: Array<RecordClipboard> = [];
+		const value = this.searchContent();
+
+		if (value !== "") {
+			const regExp = new RegExp(this.searchContent(), "ig");
+			const validateExpressionMatch = (content: string) => regExp.test(content);
+			items = this.totalItems().filter(
+				(item) =>
+					validateExpressionMatch(item.data) ||
+					validateExpressionMatch(item.title),
+			);
+		} else {
+			items = this.totalItems();
+		}
+
 		const modifyCurrent = this.currentPage() - 1;
-		const initSection = modifyCurrent * 12;
-		const endSection = initSection + 12;
-		this.viewItems.set(this.totalItems().slice(initSection, endSection));
+		const initSection = modifyCurrent * this.itemsPerPage;
+		const endSection = initSection + this.itemsPerPage;
+		this.maxPages.set(this.getMaxPages(items));
+		this.viewItems.set(items.slice(initSection, endSection));
 	}
 
+	onSearchContent() {
+		const searchValue = this.input.nativeElement.value.toLowerCase().trim();
+		this.searchContent.set(searchValue);
+		this.currentPage.set(1);
+		this.movePage();
+	}
+
+	// Use: from ClipboardCardComponent
 	updateListItems(newList: Array<RecordClipboard>) {
 		this.totalItems.set(newList);
-		const newMaxPage = Math.ceil(newList.length / 12);
+		const newMaxPage = this.getMaxPages(newList);
 
 		if (this.currentPage() > newMaxPage) {
 			this.currentPage.set(newMaxPage);
 		}
 
-		this.maxPages.set(newMaxPage);
 		this.movePage();
 	}
 }
