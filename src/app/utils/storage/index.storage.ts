@@ -96,6 +96,7 @@ export class UtilityStorage {
 	static generateRecordClipboard(
 		clipboard: string,
 		title: string,
+		tag: string,
 		keyGen: string,
 	): RecordClipboard {
 		const dateNow = new Date();
@@ -105,15 +106,25 @@ export class UtilityStorage {
 			data: clipboard,
 			title,
 		};
+
+		if (tag !== "") {
+			record.tag = tag;
+		}
+
 		return record;
 	}
 
-	static addLocalStorage(clipboard: string, title: string): boolean {
+	static addLocalStorage(
+		clipboard: string,
+		title: string,
+		tag: string,
+	): boolean {
 		try {
 			const keyGen = makeId();
 			const record = UtilityStorage.generateRecordClipboard(
 				clipboard,
 				title,
+				tag,
 				keyGen,
 			);
 			localStorage.setItem(keyGen, JSON.stringify(record));
@@ -176,7 +187,7 @@ export class UtilityStorage {
 			Math.floor(Math.random() * 100).toString(),
 		);
 		for (const item of items) {
-			UtilityStorage.addLocalStorage(item, "");
+			UtilityStorage.addLocalStorage(item, "", "");
 		}
 	};
 }

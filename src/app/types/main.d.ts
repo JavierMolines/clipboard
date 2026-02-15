@@ -6,6 +6,7 @@ declare interface RecordClipboard {
 	time: string;
 	data: string;
 	title: string;
+	tag?: string;
 }
 
 declare interface CardStyles {

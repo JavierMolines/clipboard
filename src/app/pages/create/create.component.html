@@ -7,16 +7,17 @@
     >
       <div class="flex flex-col sm:flex-row gap-3">
         <textarea
+          [value]="inputTextArea()"
+          (input)="handlerEventInput($event, 'textArea')"
           [id]="idTextInput"
           rows="4"
           class="w-full p-2.5 text-md rounded-lg border border-gray-300 text-gray-950 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-600"
-          placeholder="Data here..."
-          [formControl]="textArea"
+          placeholder="Clipboard content here..."
         ></textarea>
       </div>
 
       <h3 class="text-xl">
-        Add a title
+        Title
         <span class="text-sm text-gray-700">(Optional)</span>
       </h3>
 
@@ -24,8 +25,30 @@
         class="w-full p-2.5 text-md rounded-lg border text-gray-950 bg-gray-50 border-gray-300 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-600"
         type="text"
         placeholder="Title here..."
-        [formControl]="titleInput"
+        [value]="inputTitle()"
+        (input)="handlerEventInput($event, 'titleInput')"
       />
+
+      <h3 class="text-xl">
+        Tag
+        <span class="text-sm text-gray-700">(Optional)</span>
+      </h3>
+
+      <select
+        [value]="inputSelectTag()"
+        (change)="handlerEventInput($event, 'selectTag')"
+        class="w-full p-2.5 text-md rounded-lg border text-gray-950 bg-gray-50 border-gray-300 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-600"
+        [disabled]="tags().length === 0"
+      >
+        @if (tags().length === 0) {
+          <option value="" selected>No tags</option>
+        } @else {
+          <option value="" selected>Select tag</option>
+          @for (tag of tags(); track tag.color) {
+            <option value="{{ tag.name }}">{{ tag.name }}</option>
+          }
+        }
+      </select>
 
       <div class="flex gap-2">
         <button
