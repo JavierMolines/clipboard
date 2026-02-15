@@ -1,5 +1,6 @@
-import { Component, signal } from "@angular/core";
+import { AfterViewInit, Component, signal } from "@angular/core";
 import { IconsComponent } from "@components/icons/icons.component";
+import { focusDomById } from "@utils/dom";
 import { UtilityStorage } from "@utils/storage/index.storage";
 
 @Component({
@@ -7,7 +8,8 @@ import { UtilityStorage } from "@utils/storage/index.storage";
 	imports: [IconsComponent],
 	templateUrl: "./manage-tags.component.html",
 })
-export default class ManageTagsComponent {
+export default class ManageTagsComponent implements AfterViewInit {
+	idTextInput = "inputTagNameCreate";
 	tagInputValue = signal("");
 	tags = signal<RecordTags>([]);
 	minLengthTag = 4;
@@ -36,7 +38,8 @@ export default class ManageTagsComponent {
 		this.tags.set(nextTags);
 	}
 
-	ngOnInit() {
+	ngAfterViewInit() {
 		this.tags.set(UtilityStorage.getMappingTagsItems());
+		focusDomById(this.idTextInput);
 	}
 }

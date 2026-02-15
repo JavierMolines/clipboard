@@ -1,6 +1,7 @@
 import { AfterViewInit, Component } from "@angular/core";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { Router } from "@angular/router";
+import { focusDomById } from "@utils/dom";
 import { UtilityStorage } from "@utils/storage/index.storage";
 import { OPTIONS_BUTTON_CHECK } from "src/app/constants/main";
 
@@ -19,7 +20,7 @@ export default class CreateComponent implements AfterViewInit {
 	clearForm() {
 		this.textArea.reset();
 		this.titleInput.reset();
-		this.focusTextArea();
+		focusDomById(this.idTextInput);
 	}
 
 	sendMessage(message: string) {
@@ -55,16 +56,7 @@ export default class CreateComponent implements AfterViewInit {
 		this.router.navigate(["/"]);
 	}
 
-	focusTextArea() {
-		try {
-			const areaTextInput = document.getElementById(
-				this.idTextInput,
-			) as HTMLTextAreaElement;
-			areaTextInput.focus();
-		} catch {}
-	}
-
 	ngAfterViewInit() {
-		this.focusTextArea();
+		focusDomById(this.idTextInput);
 	}
 }

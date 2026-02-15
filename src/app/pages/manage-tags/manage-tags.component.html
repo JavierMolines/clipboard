@@ -11,10 +11,11 @@
       <div class="flex flex-col sm:flex-row gap-3">
         <input
           type="text"
+          [id]="idTextInput"
           [value]="tagInputValue()"
           (input)="handlerInputTag($event)"
           (keyup.enter)="handlerAddTag()"
-          placeholder="Write a new tag"
+          placeholder="Write a new tag (min 4 characters)"
           class="w-full px-4 py-2 rounded-lg border border-gray-300 text-sm bg-white outline-none focus:ring-4 focus:ring-orange-300"
         />
 
