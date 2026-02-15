@@ -2,47 +2,41 @@
   id="{{ prefix + id }}"
   (click)="loadClipboard(data)"
   style="scrollbar-width: none"
-  [class]="cardContainerClass"
+  [class]="styles.container"
 >
-  @if (viewMode === "list") {
-    <div
-      class="w-full max-w-full overflow-hidden grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 pr-20 text-sm"
-    >
-      <div class="min-w-0 flex items-center gap-2 overflow-hidden">
+  @if (isListView) {
+    <div [class]="styles.listRow">
+      <div [class]="styles.listHeader">
         <span class="shrink-0 whitespace-nowrap text-xs text-gray-700">{{
           time
         }}</span>
 
         @if (title !== "") {
-          <span class="shrink-0 text-gray-500">-</span>
-          <h3
-            class="shrink min-w-0 max-w-32 md:max-w-44 truncate text-sm font-semibold"
-          >
+          <span [class]="styles.listSeparator">-</span>
+          <h3 [class]="styles.listTitle">
             {{ title }}
           </h3>
         }
 
-        <span class="shrink-0 text-gray-500">-</span>
+        <span [class]="styles.listSeparator">-</span>
       </div>
 
-      <p
-        class="block min-w-0 overflow-hidden text-ellipsis whitespace-nowrap text-sm"
-      >
+      <p [class]="styles.listContent">
         {{ data }}
       </p>
     </div>
   } @else {
     @if (title !== "") {
-      <h3 [class]="titleClass">{{ title }}</h3>
+      <h3 [class]="styles.title">{{ title }}</h3>
     }
 
-    <span [class]="timeClass">{{ time }}</span>
-    <p [class]="contentClass">{{ data }}</p>
+    <span [class]="styles.time">{{ time }}</span>
+    <p [class]="styles.content">{{ data }}</p>
   }
 
   <button
     type="button"
-    [class]="deleteButtonClass"
+    [class]="styles.deleteButton"
     aria-label="Delete card"
     (click)="$event.stopPropagation()"
   >
@@ -60,7 +54,7 @@
       onclick="event.stopPropagation()"
       [href]="urlContent"
       target="_blank"
-      [class]="externalLinkButtonClass"
+      [class]="styles.externalLinkButton"
       aria-label="Open Url Card"
     >
       <app-icons name="external-link" color="#580f0f" />
