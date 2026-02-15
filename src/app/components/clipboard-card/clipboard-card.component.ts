@@ -67,7 +67,7 @@ export class ClipboardCardComponent implements OnInit {
 
 	get deleteButtonClass() {
 		if (this.viewMode === "list") {
-			return "absolute opacity-0 group-hover:opacity-100 transition-opacity duration-200 top-1.5 right-1.5 p-0.5 rounded-lg hover:bg-white focus:outline-none group";
+			return "absolute z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200 top-1/2 -translate-y-1/2 right-1.5 p-0.5 rounded-lg hover:bg-white focus:outline-none group";
 		}
 
 		return "absolute opacity-0 group-hover:opacity-100 transition-opacity duration-200 top-3 right-1.5 p-0.5 rounded-lg hover:bg-white focus:outline-none group";
@@ -75,7 +75,7 @@ export class ClipboardCardComponent implements OnInit {
 
 	get externalLinkButtonClass() {
 		if (this.viewMode === "list") {
-			return "absolute opacity-0 group-hover:opacity-100 transition-opacity duration-200 top-6 right-1.5 p-0.5 rounded-lg hover:bg-white";
+			return "absolute z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200 top-1/2 -translate-y-1/2 right-9 p-0.5 rounded-lg hover:bg-white";
 		}
 
 		return "absolute opacity-0 group-hover:opacity-100 transition-opacity duration-200 top-12 right-1.5 p-0.5 rounded-lg hover:bg-white";
