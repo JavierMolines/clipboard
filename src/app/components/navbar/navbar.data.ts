@@ -2,7 +2,7 @@ export const options: IOptionsNavbar = {
 	top: [
 		{
 			img: "document",
-			title: "List clipboard",
+			title: "Clipboard list",
 			link: "/",
 		},
 		{
