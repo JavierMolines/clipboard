@@ -1,12 +1,17 @@
-interface RecordClipboard {
+type CheckboxStatus = "checked" | "";
+type ClipboardViewMode = "grid" | "list";
+
+declare interface RecordClipboard {
 	id: string;
 	time: string;
 	data: string;
 	title: string;
 }
 
-type CheckboxStatus = "checked" | "";
-
-interface SettingsOptions {
+declare interface SettingsOptions {
 	value: CheckboxStatus;
+}
+
+declare interface SettingsViewOptions {
+	value: ClipboardViewMode;
 }

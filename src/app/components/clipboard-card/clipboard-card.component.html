@@ -2,18 +2,47 @@
   id="{{ prefix + id }}"
   (click)="loadClipboard(data)"
   style="scrollbar-width: none"
-  class="select-none relative bg-orange-200 hover:bg-orange-300 break-words transition-all duration-200 cursor-pointer group pl-4 pr-8 py-2.5 rounded-lg overflow-ellipsis overflow-y-scroll h-[160px]"
+  [class]="cardContainerClass"
 >
-  @if (title !== "") {
-    <h3 class="text-lg font-semibold">{{ title }}</h3>
-  }
+  @if (viewMode === "list") {
+    <div
+      class="w-full max-w-full overflow-hidden grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 pr-12 text-sm"
+    >
+      <div class="min-w-0 flex items-center gap-2 overflow-hidden">
+        <span class="shrink-0 whitespace-nowrap text-xs text-gray-700">{{
+          time
+        }}</span>
 
-  <span class="text-gray-700 text-xs">{{ time }}</span>
-  <p>{{ data }}</p>
+        @if (title !== "") {
+          <span class="shrink-0 text-gray-500">-</span>
+          <h3
+            class="shrink min-w-0 max-w-32 md:max-w-44 truncate text-sm font-semibold"
+          >
+            {{ title }}
+          </h3>
+        }
+
+        <span class="shrink-0 text-gray-500">-</span>
+      </div>
+
+      <p
+        class="block min-w-0 overflow-hidden text-ellipsis whitespace-nowrap text-sm"
+      >
+        {{ data }}
+      </p>
+    </div>
+  } @else {
+    @if (title !== "") {
+      <h3 [class]="titleClass">{{ title }}</h3>
+    }
+
+    <span [class]="timeClass">{{ time }}</span>
+    <p [class]="contentClass">{{ data }}</p>
+  }
 
   <button
     type="button"
-    class="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-200 top-3 right-1.5 p-0.5 rounded-lg hover:bg-white focus:outline-none group"
+    [class]="deleteButtonClass"
     aria-label="Delete card"
     (click)="$event.stopPropagation()"
   >
@@ -31,7 +60,7 @@
       onclick="event.stopPropagation()"
       [href]="urlContent"
       target="_blank"
-      class="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-200 top-12 right-1.5 p-0.5 rounded-lg hover:bg-white"
+      [class]="externalLinkButtonClass"
       aria-label="Open Url Card"
     >
       <app-icons name="external-link" color="#580f0f" />

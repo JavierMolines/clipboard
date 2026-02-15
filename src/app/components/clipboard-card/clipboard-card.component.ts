@@ -21,6 +21,7 @@ export class ClipboardCardComponent implements OnInit {
 	@Input({ required: true }) time = "";
 	@Input({ required: true }) data = "";
 	@Input({ required: true }) title = "";
+	@Input() viewMode: ClipboardViewMode = "grid";
 
 	@Output() updateListItems = new EventEmitter();
 
@@ -32,24 +33,74 @@ export class ClipboardCardComponent implements OnInit {
 	prefix = "view_paper_";
 	delayAnimation = false;
 
+	get cardContainerClass() {
+		if (this.viewMode === "list") {
+			return "select-none relative bg-orange-200 hover:bg-orange-300 transition-all duration-200 cursor-pointer group px-3 py-2 rounded-md w-full max-w-full overflow-hidden";
+		}
+
+		return "select-none relative bg-orange-200 hover:bg-orange-300 break-words transition-all duration-200 cursor-pointer group pl-4 pr-8 py-2.5 rounded-lg overflow-ellipsis overflow-y-scroll h-[160px]";
+	}
+
+	get titleClass() {
+		if (this.viewMode === "list") {
+			return "text-sm font-semibold leading-tight truncate pr-12";
+		}
+
+		return "text-lg font-semibold";
+	}
+
+	get timeClass() {
+		if (this.viewMode === "list") {
+			return "block text-gray-700 text-xs leading-tight";
+		}
+
+		return "text-gray-700 text-xs";
+	}
+
+	get contentClass() {
+		if (this.viewMode === "list") {
+			return "truncate pr-12 text-sm leading-tight";
+		}
+
+		return "";
+	}
+
+	get deleteButtonClass() {
+		if (this.viewMode === "list") {
+			return "absolute opacity-0 group-hover:opacity-100 transition-opacity duration-200 top-1.5 right-1.5 p-0.5 rounded-lg hover:bg-white focus:outline-none group";
+		}
+
+		return "absolute opacity-0 group-hover:opacity-100 transition-opacity duration-200 top-3 right-1.5 p-0.5 rounded-lg hover:bg-white focus:outline-none group";
+	}
+
+	get externalLinkButtonClass() {
+		if (this.viewMode === "list") {
+			return "absolute opacity-0 group-hover:opacity-100 transition-opacity duration-200 top-6 right-1.5 p-0.5 rounded-lg hover:bg-white";
+		}
+
+		return "absolute opacity-0 group-hover:opacity-100 transition-opacity duration-200 top-12 right-1.5 p-0.5 rounded-lg hover:bg-white";
+	}
+
 	private getPaper() {
 		return document.getElementById(this.prefix + this.id) as HTMLDivElement;
 	}
 
 	private changeBgColor() {
-		const replaceClassName = (
-			container: HTMLDivElement,
-			target: string,
-			replacer: string,
-		) => {
-			container.className = container.className.replaceAll(target, replacer);
-		};
-
 		const container = this.getPaper();
-		replaceClassName(container, this.DEFAULT_COLOR, this.NEW_COLOR);
+		if (!container) {
+			this.delayAnimation = false;
+			return;
+		}
+
+		const defaultClasses = this.DEFAULT_COLOR.split(" ");
+		const newClasses = this.NEW_COLOR.split(" ");
+
+		container.classList.remove(...defaultClasses);
+		container.classList.add(...newClasses);
 
 		setTimeout(() => {
-			replaceClassName(container, this.NEW_COLOR, this.DEFAULT_COLOR);
+			container.classList.remove(...newClasses);
+			container.classList.add(...defaultClasses);
 			this.delayAnimation = false;
 		}, this.delay);
 	}

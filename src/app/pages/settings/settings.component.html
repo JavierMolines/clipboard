@@ -10,10 +10,28 @@
       [checked]="statusButtonCheck()"
     />
     <div
-      class="relative w-11 h-6 rounded-full peer bg-gray-700 peer-focus:ring-4 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-500"
+      class="relative w-11 h-6 rounded-full peer bg-gray-700 peer-focus:ring-4 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-500"
     ></div>
     <span class="select-none ms-3 text-sm font-medium text-gray-900"
       >Auto redirect save</span
     >
   </label>
+
+  <div class="flex flex-col gap-2">
+    <span class="select-none text-sm font-medium text-gray-900"
+      >Clipboard view</span
+    >
+
+    <button
+      type="button"
+      (click)="handlerToggleViewMode()"
+      class="cursor-pointer rounded-lg bg-gray-200 px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-300 transition-colors w-fit"
+    >
+      {{ clipboardViewMode() === "grid" ? "Use list view" : "Use grid view" }}
+    </button>
+
+    <span class="text-xs text-gray-500"
+      >Current mode: {{ clipboardViewMode() }}</span
+    >
+  </div>
 </div>

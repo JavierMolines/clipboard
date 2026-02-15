@@ -9,6 +9,7 @@ import {
 } from "@angular/core";
 import { ClipboardCardComponent } from "@components/clipboard-card/clipboard-card.component";
 import { UtilityStorage } from "@utils/storage/index.storage";
+import { OPTIONS_CLIPBOARD_VIEW } from "src/app/constants/main";
 
 @Component({
 	selector: "app-clipboard-list",
@@ -22,6 +23,7 @@ export class ClipboardListComponent {
 	searchContent = signal("");
 	currentPage = signal(1);
 	maxPages = signal(1);
+	clipboardViewMode = signal<ClipboardViewMode>("grid");
 	viewItems = signal<Array<RecordClipboard>>([]);
 	totalItems = signal(
 		UtilityStorage.addMapperClipboardItems(
@@ -31,6 +33,7 @@ export class ClipboardListComponent {
 	handlerSearchContent = computed(
 		() => this.totalItems().length > this.itemsPerPage,
 	);
+	isListView = computed(() => this.clipboardViewMode() === "list");
 
 	@ViewChild("searchContent") input!: ElementRef<HTMLInputElement>;
 
@@ -47,6 +50,11 @@ export class ClipboardListComponent {
 	}
 
 	ngOnInit() {
+		const viewOption = UtilityStorage.getViewOptionSettingsStorage(
+			OPTIONS_CLIPBOARD_VIEW,
+		);
+		this.clipboardViewMode.set(viewOption.value);
+
 		const items = this.totalItems();
 		this.maxPages.set(this.getMaxPages(items));
 		this.viewItems.set(items.slice(0, this.itemsPerPage));

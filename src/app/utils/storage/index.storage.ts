@@ -69,6 +69,25 @@ export class UtilityStorage {
 		} catch {}
 	}
 
+	static getViewOptionSettingsStorage(key: string): SettingsViewOptions {
+		const defaultValue: SettingsViewOptions = {
+			value: "grid",
+		};
+
+		try {
+			const valueStorage = JSON.parse(localStorage.getItem(key) ?? "");
+			defaultValue.value = valueStorage.value;
+		} catch {}
+
+		return defaultValue;
+	}
+
+	static addViewOptionSettingsStorage(key: string, data: SettingsViewOptions) {
+		try {
+			localStorage.setItem(key, JSON.stringify(data));
+		} catch {}
+	}
+
 	static generateRecordClipboard(
 		clipboard: string,
 		title: string,
