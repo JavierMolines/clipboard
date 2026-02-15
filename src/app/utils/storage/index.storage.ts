@@ -1,5 +1,10 @@
-import { ID_CLIPBOARDS_ITEMS } from "src/app/constants/main";
+import { ID_CLIPBOARDS_ITEMS, ID_TAGS_ITEMS } from "src/app/constants/main";
 import { makeId } from "../methods";
+import {
+	addRecordTag,
+	deleteRecordTag,
+	normalizeRecordTags,
+} from "../tags/index.tags";
 
 // biome-ignore lint/complexity/noStaticOnlyClass: it necesary
 export class UtilityStorage {
@@ -125,6 +130,45 @@ export class UtilityStorage {
 			globalData.unshift(key);
 			localStorage.setItem(ID_CLIPBOARDS_ITEMS, JSON.stringify(globalData));
 		} catch {}
+	}
+
+	static getMappingTagsItems(): RecordTags {
+		try {
+			const rawTags: unknown = JSON.parse(
+				localStorage.getItem(ID_TAGS_ITEMS) ?? "[]",
+			);
+			const normalizeTags = normalizeRecordTags(rawTags);
+
+			if (normalizeTags.hasUpdated) {
+				localStorage.setItem(ID_TAGS_ITEMS, JSON.stringify(normalizeTags.tags));
+			}
+
+			return normalizeTags.tags;
+		} catch {
+			return [];
+		}
+	}
+
+	static addTagLocalStorage(tag: string): RecordTags {
+		try {
+			const globalTags = UtilityStorage.getMappingTagsItems();
+			const newTags = addRecordTag(globalTags, tag);
+			localStorage.setItem(ID_TAGS_ITEMS, JSON.stringify(newTags));
+			return newTags;
+		} catch {
+			return [];
+		}
+	}
+
+	static deleteTagLocalStorage(tag: string): RecordTags {
+		try {
+			const globalTags = UtilityStorage.getMappingTagsItems();
+			const newTags = deleteRecordTag(globalTags, tag);
+			localStorage.setItem(ID_TAGS_ITEMS, JSON.stringify(newTags));
+			return newTags;
+		} catch {
+			return [];
+		}
 	}
 
 	static makeMocksLoadItems = () => {

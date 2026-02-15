@@ -29,3 +29,10 @@ declare interface SettingsOptions {
 declare interface SettingsViewOptions {
 	value: ClipboardViewMode;
 }
+
+declare interface RecordTag {
+	name: string;
+	color: string;
+}
+
+declare type RecordTags = Array<RecordTag>;

@@ -1,0 +1,79 @@
+<section class="flex flex-col h-full min-h-0 gap-5">
+  <article class="flex flex-col gap-2 w-full md:w-1/2">
+    <h1 class="text-2xl">Add tag</h1>
+    <div
+      class="w-full py-6 px-6 bg-gray-50 rounded-2xl border border-gray-300 gap-4 grid border-dashed"
+    >
+      <p class="text-sm text-gray-700">
+        Create tags to keep your clipboard items organized.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-3">
+        <input
+          type="text"
+          [value]="tagInputValue()"
+          (input)="handlerInputTag($event)"
+          (keyup.enter)="handlerAddTag()"
+          placeholder="Write a new tag"
+          class="w-full px-4 py-2 rounded-lg border border-gray-300 text-sm bg-white outline-none focus:ring-4 focus:ring-orange-300"
+        />
+
+        <button
+          type="button"
+          aria-label="Add tag"
+          (click)="handlerAddTag()"
+          [class]="
+            isValidTagInput()
+              ? 'w-auto whitespace-nowrap focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-md px-5 py-2.5 cursor-pointer'
+              : 'w-auto whitespace-nowrap focus:outline-none text-white bg-gray-700 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-md px-5 py-2.5 cursor-pointer'
+          "
+        >
+          Add tag
+        </button>
+      </div>
+    </div>
+  </article>
+
+  <article class="flex flex-col gap-2 flex-1 min-h-0">
+    <h1 class="text-2xl">Created tags</h1>
+    <div
+      class="w-full py-6 px-6 bg-gray-50 rounded-2xl border border-gray-300 border-dashed h-full min-h-0 flex flex-col"
+    >
+      @if (tags().length === 0) {
+        <p class="text-sm text-gray-700">No tags created yet.</p>
+      } @else {
+        <div class="grid gap-3 overflow-y-auto min-h-0 pr-1">
+          @for (tag of tags(); track tag.name) {
+            <div
+              class="flex items-center justify-between gap-3 bg-white border border-gray-300 rounded-lg px-4 py-2.5"
+            >
+              <div class="flex items-center gap-2">
+                <app-icons name="tag-horizontal" [color]="tag.color" />
+                <span class="text-sm text-gray-900 break-all">{{
+                  tag.name
+                }}</span>
+              </div>
+
+              <button
+                type="button"
+                aria-label="Delete tag"
+                class="group flex p-1 border-none cursor-pointer"
+              >
+                <span class="group-focus:hidden">
+                  <app-icons name="delete" color="#580f0f" />
+                </span>
+
+                <span
+                  class="hidden group-focus:block"
+                  (click)="handlerDeleteTag(tag.name)"
+                >
+                  <app-icons name="confirm-delete" color="#580f0f" />
+                </span>
+              </button>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </article>
+</section>

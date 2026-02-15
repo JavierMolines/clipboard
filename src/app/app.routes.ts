@@ -31,6 +31,14 @@ export const routes: Routes = [
 					import("@pages/storage/storage.component").then((m) => m.default),
 				data: MAP_ROUTES["STORAGE"],
 			},
+			{
+				path: "manage-tags",
+				loadComponent: () =>
+					import("@pages/manage-tags/manage-tags.component").then(
+						(m) => m.default,
+					),
+				data: MAP_ROUTES["MANAGE_TAGS"],
+			},
 		],
 	},
 	{

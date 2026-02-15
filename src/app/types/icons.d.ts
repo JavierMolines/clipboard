@@ -5,6 +5,8 @@ declare type ValidIcons =
 	| "create"
 	| "document"
 	| "github"
+	| "tags"
+	| "tag-horizontal"
 	| "delete"
 	| "storage"
 	| "external-link"
