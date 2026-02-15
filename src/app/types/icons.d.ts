@@ -1,4 +1,4 @@
-type ValidIcons =
+declare type ValidIcons =
 	| "menu"
 	| "settings"
 	| "copy"
