@@ -78,7 +78,12 @@
         </span>
       </div>
 
-      <app-select-tags [(tags)]="tags"></app-select-tags>
+      <app-select-tags
+        [consumer]="'clipboard-list'"
+        [(inputSelectTag)]="inputSelectTag"
+        [(tags)]="tags"
+        [callback]="onChangeSelectTag.bind(this)"
+      ></app-select-tags>
     </nav>
   }
 

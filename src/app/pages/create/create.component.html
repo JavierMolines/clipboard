@@ -35,7 +35,9 @@
       </h3>
 
       <app-select-tags
+        [consumer]="'create'"
         [(tags)]="tags"
+        [(inputSelectTag)]="inputSelectTag"
         [callback]="handlerEventInput.bind(this)"
       ></app-select-tags>
 

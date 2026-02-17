@@ -21,6 +21,7 @@ export class ClipboardListComponent {
 	private itemsPerPage = 12;
 
 	searchContent = signal("");
+	inputSelectTag = signal("");
 	currentPage = signal(1);
 	maxPages = signal(1);
 	tags = signal<RecordTags>([]);
@@ -84,21 +85,7 @@ export class ClipboardListComponent {
 	}
 
 	movePage() {
-		let items: Array<RecordClipboard> = [];
-		const value = this.searchContent();
-
-		if (value !== "") {
-			const regExp = new RegExp(this.searchContent(), "ig");
-			const validateExpressionMatch = (content: string) => regExp.test(content);
-			items = this.totalItems().filter(
-				(item) =>
-					validateExpressionMatch(item.data) ||
-					validateExpressionMatch(item.title),
-			);
-		} else {
-			items = this.totalItems();
-		}
-
+		const items = this.filterItems();
 		const modifyCurrent = this.currentPage() - 1;
 		const initSection = modifyCurrent * this.itemsPerPage;
 		const endSection = initSection + this.itemsPerPage;
@@ -113,6 +100,15 @@ export class ClipboardListComponent {
 		this.movePage();
 	}
 
+	onChangeSelectTag(event: Event) {
+		const target = event.target as HTMLSelectElement;
+		const value = target.value.trim() ?? "";
+
+		this.inputSelectTag.set(value);
+		this.currentPage.set(1);
+		this.movePage();
+	}
+
 	// Use: from ClipboardCardComponent
 	updateListItems(newList: Array<RecordClipboard>) {
 		this.totalItems.set(newList);
@@ -123,5 +119,35 @@ export class ClipboardListComponent {
 		}
 
 		this.movePage();
+	}
+
+	private filterItems(): Array<RecordClipboard> {
+		let partialsItems = this.totalItems();
+		const contentSearch = this.searchContent();
+		const contentTag = this.inputSelectTag();
+		const validateExpressionMatch = (content: string, expression: string) => {
+			const regExp = new RegExp(expression, "ig");
+			return regExp.test(content);
+		};
+
+		if (contentTag !== "") {
+			partialsItems = partialsItems.filter((item) => {
+				if (typeof item.tag !== "string") {
+					return false;
+				}
+
+				return validateExpressionMatch(item.tag, contentTag);
+			});
+		}
+
+		if (contentSearch !== "") {
+			partialsItems = partialsItems.filter(
+				(item) =>
+					validateExpressionMatch(item.data, contentSearch) ||
+					validateExpressionMatch(item.title, contentSearch),
+			);
+		}
+
+		return partialsItems;
 	}
 }

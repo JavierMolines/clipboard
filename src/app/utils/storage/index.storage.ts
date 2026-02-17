@@ -37,10 +37,8 @@ export class UtilityStorage {
 		return data.map((item) => {
 			const partials = UtilityStorage.getItemLocalStorage(item);
 			const record: RecordClipboard = {
+				...partials,
 				id: item,
-				time: partials.time,
-				data: partials.data,
-				title: partials.title,
 			};
 
 			return record;
