@@ -3,9 +3,6 @@
 > [!IMPORTANT]
 > The server does not store any data entered in the view; all information is managed through localStorage.
 
-> [!TIP]
-> For the JSON language editor, [CodeMirror](https://codemirror.net/) was used
-
 ### Development Setup
 
 First, clone the repo and cd into the project:

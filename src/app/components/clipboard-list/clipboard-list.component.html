@@ -9,7 +9,7 @@
   }
 
   @if (handlerSearchContent()) {
-    <nav class="flex flex-col md:flex-row gap-2" aria-label="Page navigation">
+    <nav class="grid grid-cols-1 md:grid-cols-[auto_2fr_1fr] gap-4">
       <ul class="flex items-center -space-x-px h-10 text-base">
         <li>
           <button
@@ -68,7 +68,7 @@
           (input)="onSearchContent()"
           #searchContent
           placeholder="Search..."
-          class="peer p-1 pr-16 border border-gray-300 rounded w-full focus:outline-none"
+          class="peer p-2 pr-16 border border-gray-300 rounded w-full focus:outline-none"
         />
 
         <span
@@ -77,18 +77,31 @@
           Ctrl + K
         </span>
       </div>
+
+      <app-select-tags
+        [consumer]="'clipboard-list'"
+        [(inputSelectTag)]="inputSelectTag"
+        [(tags)]="tags"
+        [callback]="onChangeSelectTag.bind(this)"
+      ></app-select-tags>
     </nav>
   }
 
   <div
-    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+    [class]="
+      isListView()
+        ? 'flex flex-col gap-3'
+        : 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'
+    "
   >
     @for (item of viewItems(); track item.id) {
       <app-clipboard-card
+        class="w-full block"
         [time]="item.time"
         [id]="item.id"
         [data]="item.data"
         [title]="item.title"
+        [viewMode]="clipboardViewMode()"
         (updateListItems)="updateListItems($event)"
       />
     }

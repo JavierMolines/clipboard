@@ -1,5 +1,5 @@
-<section class="font-sans leading-normal tracking-normal">
-  <div class="flex flex-no-wrap h-dvh relative">
+<section class="font-sans leading-normal tracking-normal overflow-x-hidden">
+  <div class="flex flex-no-wrap h-dvh relative overflow-x-hidden">
     <button
       aria-label="Toggle menu"
       (click)="handlerMenuToggle()"
@@ -11,10 +11,10 @@
 
     <div
       #menuSlide
-      class="z-10 hidden fixed lg:static lg:flex flex-col w-[200px] h-full bg-gray-800 text-white"
+      class="z-10 hidden fixed lg:static lg:flex flex-col w-50 h-full bg-gray-800 text-white"
     >
       <div class="p-6 text-center font-bold border-gray-700">
-        <h3 class="text-2xl">Clipboard Manager</h3>
+        <h2 class="text-2xl">Clipboard Manager</h2>
       </div>
 
       <nav class="h-full flex flex-col justify-between">
@@ -62,7 +62,7 @@
       </nav>
     </div>
 
-    <div class="flex-1 p-10 h-full">
+    <div class="flex-1 min-w-0 p-10 h-full overflow-x-hidden">
       <router-outlet />
     </div>
   </div>

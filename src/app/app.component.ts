@@ -23,23 +23,29 @@ export class AppComponent implements OnInit {
 	ngOnInit() {
 		this.router.events.forEach((event) => {
 			if (event instanceof NavigationEnd) {
-				let currentRoute = this.activatedRoute;
-
-				while (currentRoute.firstChild) {
-					currentRoute = currentRoute.firstChild;
-				}
-
-				const routeData = currentRoute.snapshot.data;
-				if (routeData["title"]) {
-					this.titleService.setTitle(routeData["title"]);
-				}
-				if (routeData["description"]) {
-					this.metaService.updateTag({
-						name: "description",
-						content: routeData["description"],
-					});
-				}
+				this.updatePageMetadata();
 			}
 		});
+	}
+
+	private updatePageMetadata() {
+		let currentRoute = this.activatedRoute;
+
+		while (currentRoute.firstChild) {
+			currentRoute = currentRoute.firstChild;
+		}
+
+		const routeData = currentRoute.snapshot.data;
+
+		if (routeData["title"]) {
+			this.titleService.setTitle(routeData["title"]);
+		}
+
+		if (routeData["description"]) {
+			this.metaService.updateTag({
+				name: "description",
+				content: routeData["description"],
+			});
+		}
 	}
 }

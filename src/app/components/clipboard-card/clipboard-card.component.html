@@ -2,18 +2,41 @@
   id="{{ prefix + id }}"
   (click)="loadClipboard(data)"
   style="scrollbar-width: none"
-  class="select-none relative bg-orange-200 hover:bg-orange-300 break-words transition-all duration-200 cursor-pointer group pl-4 pr-8 py-2.5 rounded-lg overflow-ellipsis overflow-y-scroll h-[160px]"
+  [class]="styles.container"
 >
-  @if (title !== "") {
-    <h3 class="text-lg font-semibold">{{ title }}</h3>
-  }
+  @if (isListView) {
+    <div [class]="styles.listRow">
+      <div [class]="styles.listHeader">
+        <span class="shrink-0 whitespace-nowrap text-xs text-gray-700">{{
+          time
+        }}</span>
 
-  <span class="text-gray-700 text-xs">{{ time }}</span>
-  <p>{{ data }}</p>
+        @if (title !== "") {
+          <span [class]="styles.listSeparator">-</span>
+          <h2 [class]="styles.listTitle">
+            {{ title }}
+          </h2>
+        }
+
+        <span [class]="styles.listSeparator">-</span>
+      </div>
+
+      <p [class]="styles.listContent">
+        {{ data }}
+      </p>
+    </div>
+  } @else {
+    @if (title !== "") {
+      <h2 [class]="styles.title">{{ title }}</h2>
+    }
+
+    <span [class]="styles.time">{{ time }}</span>
+    <p [class]="styles.content">{{ data }}</p>
+  }
 
   <button
     type="button"
-    class="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-200 top-3 right-1.5 p-0.5 rounded-lg hover:bg-white focus:outline-none group"
+    [class]="styles.deleteButton"
     aria-label="Delete card"
     (click)="$event.stopPropagation()"
   >
@@ -31,7 +54,7 @@
       onclick="event.stopPropagation()"
       [href]="urlContent"
       target="_blank"
-      class="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-200 top-12 right-1.5 p-0.5 rounded-lg hover:bg-white"
+      [class]="styles.externalLinkButton"
       aria-label="Open Url Card"
     >
       <app-icons name="external-link" color="#580f0f" />

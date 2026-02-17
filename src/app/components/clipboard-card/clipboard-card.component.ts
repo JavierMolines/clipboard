@@ -9,6 +9,12 @@ import {
 import { IconsComponent } from "@components/icons/icons.component";
 import { copyClipboard } from "@utils/methods";
 import { UtilityStorage } from "@utils/storage/index.storage";
+import {
+	ACTIVE_COLOR_CLASSES,
+	CARD_STYLES,
+	DEFAULT_COLOR_CLASSES,
+	URL_CONTENT_REGEX,
+} from "./clipboard-card.config";
 
 @Component({
 	selector: "app-clipboard-card",
@@ -21,41 +27,49 @@ export class ClipboardCardComponent implements OnInit {
 	@Input({ required: true }) time = "";
 	@Input({ required: true }) data = "";
 	@Input({ required: true }) title = "";
+	@Input() viewMode: ClipboardViewMode = "grid";
 
 	@Output() updateListItems = new EventEmitter();
 
-	DEFAULT_COLOR = "bg-orange-200 hover:bg-orange-300";
-	NEW_COLOR = "bg-green-200 hover:bg-green-300";
+	readonly styleByMode = CARD_STYLES;
+	readonly defaultColorClasses = DEFAULT_COLOR_CLASSES;
+	readonly activeColorClasses = ACTIVE_COLOR_CLASSES;
 
 	delay = 200;
 	urlContent = "";
 	prefix = "view_paper_";
 	delayAnimation = false;
 
+	get isListView() {
+		return this.viewMode === "list";
+	}
+
+	get styles() {
+		return this.styleByMode[this.viewMode];
+	}
+
 	private getPaper() {
 		return document.getElementById(this.prefix + this.id) as HTMLDivElement;
 	}
 
 	private changeBgColor() {
-		const replaceClassName = (
-			container: HTMLDivElement,
-			target: string,
-			replacer: string,
-		) => {
-			container.className = container.className.replaceAll(target, replacer);
-		};
-
 		const container = this.getPaper();
-		replaceClassName(container, this.DEFAULT_COLOR, this.NEW_COLOR);
+		if (!container) {
+			this.delayAnimation = false;
+			return;
+		}
+
+		container.classList.remove(...this.defaultColorClasses);
+		container.classList.add(...this.activeColorClasses);
 
 		setTimeout(() => {
-			replaceClassName(container, this.NEW_COLOR, this.DEFAULT_COLOR);
+			container.classList.remove(...this.activeColorClasses);
+			container.classList.add(...this.defaultColorClasses);
 			this.delayAnimation = false;
 		}, this.delay);
 	}
 
 	deleteItem(_: Event, key: string) {
-		console.log("Delete paper");
 		const newList = UtilityStorage.addMapperClipboardItems(
 			UtilityStorage.deleteItemLocalStorage(key),
 		);
@@ -74,9 +88,7 @@ export class ClipboardCardComponent implements OnInit {
 	}
 
 	assignUrlOption() {
-		const regex =
-			/^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/.*)?$/;
-		const isUrl = regex.test(this.data);
+		const isUrl = URL_CONTENT_REGEX.test(this.data);
 
 		if (!isUrl) return;
 

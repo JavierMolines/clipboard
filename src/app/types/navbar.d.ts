@@ -1,10 +1,10 @@
-interface IDatagramNavbar {
+declare interface IDatagramNavbar {
 	img: ValidIcons;
 	title: string;
 	link: string;
 }
 
-interface IOptionsNavbar {
+declare interface IOptionsNavbar {
 	top: Array<IDatagramNavbar>;
 	bottom: Array<IDatagramNavbar>;
 }

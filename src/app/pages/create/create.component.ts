@@ -1,70 +1,84 @@
-import { AfterViewInit, Component } from "@angular/core";
-import { FormControl, ReactiveFormsModule } from "@angular/forms";
+import { AfterViewInit, Component, signal } from "@angular/core";
 import { Router } from "@angular/router";
+import { SelectTagsComponent } from "@components/select-tags/select-tags.component";
+import { focusDomById } from "@utils/dom";
 import { UtilityStorage } from "@utils/storage/index.storage";
 import { OPTIONS_BUTTON_CHECK } from "src/app/constants/main";
 
 @Component({
 	selector: "app-create",
-	imports: [ReactiveFormsModule],
+	imports: [SelectTagsComponent],
 	templateUrl: "./create.component.html",
 })
 export default class CreateComponent implements AfterViewInit {
-	idTextInput = "clipboardArea";
-	textArea = new FormControl("");
-	titleInput = new FormControl("");
-
 	constructor(private router: Router) {}
 
+	idTextInput = "clipboardArea";
+	inputTextArea = signal("");
+	inputTitle = signal("");
+	inputSelectTag = signal("");
+	tags = signal<RecordTags>([]);
+
 	clearForm() {
-		this.textArea.reset();
-		this.titleInput.reset();
-		this.focusTextArea();
+		this.inputTextArea.set("");
+		this.inputTitle.set("");
+		this.inputSelectTag.set("");
+		focusDomById(this.idTextInput);
 	}
 
-	sendMessage(message: string) {
-		console.log(message);
+	handlerEventInput(
+		event: Event,
+		type: "textArea" | "titleInput" | "selectTag",
+	) {
+		const target = event.target as
+			| HTMLSelectElement
+			| HTMLInputElement
+			| HTMLTextAreaElement;
+
+		const value = target.value.trim() ?? "";
+
+		switch (type) {
+			case "textArea":
+				this.inputTextArea.set(value);
+				break;
+			case "titleInput":
+				this.inputTitle.set(value);
+				break;
+			case "selectTag":
+				this.inputSelectTag.set(value);
+				break;
+		}
 	}
 
 	buttonClick(event: Event) {
 		event.preventDefault();
 
-		const handlerTextArea = this.textArea.value?.trim() ?? "";
-		const handlerTitleInput = this.titleInput.value?.trim() ?? "";
+		const valueTextArea = this.inputTextArea().trim() ?? "";
+		const valueTitleInput = this.inputTitle().trim() ?? "";
+		const valueSelectTag = this.inputSelectTag().trim() ?? "";
 
-		if (handlerTextArea.length === 0) {
-			this.sendMessage("Empty");
+		if (valueTextArea.length === 0) {
 			return;
 		}
 
-		this.saveClipboard(handlerTextArea, handlerTitleInput);
+		this.saveClipboard(valueTextArea, valueTitleInput, valueSelectTag);
 	}
 
-	saveClipboard(clipboard: string, title: string) {
-		const isInsert = UtilityStorage.addLocalStorage(clipboard, title);
+	saveClipboard(clipboard: string, title: string, tag: string) {
+		const { addLocalStorage, getOptionSettingsStorage } = UtilityStorage;
+		const isInsert = addLocalStorage(clipboard, title, tag);
 
-		if (!isInsert) {
-			this.sendMessage("Not Save");
-		}
+		if (!isInsert) return;
 
 		this.clearForm();
+		const buttonOption = getOptionSettingsStorage(OPTIONS_BUTTON_CHECK);
 
-		const buttonOption =
-			UtilityStorage.getOptionSettingsStorage(OPTIONS_BUTTON_CHECK);
 		if (buttonOption.value === "") return;
 		this.router.navigate(["/"]);
 	}
 
-	focusTextArea() {
-		try {
-			const areaTextInput = document.getElementById(
-				this.idTextInput,
-			) as HTMLTextAreaElement;
-			areaTextInput.focus();
-		} catch {}
-	}
-
 	ngAfterViewInit() {
-		this.focusTextArea();
+		this.tags.set(UtilityStorage.getMappingTagsItems());
+		focusDomById(this.idTextInput);
 	}
 }

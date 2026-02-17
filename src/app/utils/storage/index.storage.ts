@@ -1,5 +1,10 @@
-import { ID_CLIPBOARDS_ITEMS } from "src/app/constants/main";
+import { ID_CLIPBOARDS_ITEMS, ID_TAGS_ITEMS } from "src/app/constants/main";
 import { makeId } from "../methods";
+import {
+	addRecordTag,
+	deleteRecordTag,
+	normalizeRecordTags,
+} from "../tags/index.tags";
 
 // biome-ignore lint/complexity/noStaticOnlyClass: it necesary
 export class UtilityStorage {
@@ -32,10 +37,8 @@ export class UtilityStorage {
 		return data.map((item) => {
 			const partials = UtilityStorage.getItemLocalStorage(item);
 			const record: RecordClipboard = {
+				...partials,
 				id: item,
-				time: partials.time,
-				data: partials.data,
-				title: partials.title,
 			};
 
 			return record;
@@ -69,9 +72,29 @@ export class UtilityStorage {
 		} catch {}
 	}
 
+	static getViewOptionSettingsStorage(key: string): SettingsViewOptions {
+		const defaultValue: SettingsViewOptions = {
+			value: "grid",
+		};
+
+		try {
+			const valueStorage = JSON.parse(localStorage.getItem(key) ?? "");
+			defaultValue.value = valueStorage.value;
+		} catch {}
+
+		return defaultValue;
+	}
+
+	static addViewOptionSettingsStorage(key: string, data: SettingsViewOptions) {
+		try {
+			localStorage.setItem(key, JSON.stringify(data));
+		} catch {}
+	}
+
 	static generateRecordClipboard(
 		clipboard: string,
 		title: string,
+		tag: string,
 		keyGen: string,
 	): RecordClipboard {
 		const dateNow = new Date();
@@ -81,15 +104,25 @@ export class UtilityStorage {
 			data: clipboard,
 			title,
 		};
+
+		if (tag !== "") {
+			record.tag = tag;
+		}
+
 		return record;
 	}
 
-	static addLocalStorage(clipboard: string, title: string): boolean {
+	static addLocalStorage(
+		clipboard: string,
+		title: string,
+		tag: string,
+	): boolean {
 		try {
 			const keyGen = makeId();
 			const record = UtilityStorage.generateRecordClipboard(
 				clipboard,
 				title,
+				tag,
 				keyGen,
 			);
 			localStorage.setItem(keyGen, JSON.stringify(record));
@@ -108,12 +141,51 @@ export class UtilityStorage {
 		} catch {}
 	}
 
+	static getMappingTagsItems(): RecordTags {
+		try {
+			const rawTags: unknown = JSON.parse(
+				localStorage.getItem(ID_TAGS_ITEMS) ?? "[]",
+			);
+			const normalizeTags = normalizeRecordTags(rawTags);
+
+			if (normalizeTags.hasUpdated) {
+				localStorage.setItem(ID_TAGS_ITEMS, JSON.stringify(normalizeTags.tags));
+			}
+
+			return normalizeTags.tags;
+		} catch {
+			return [];
+		}
+	}
+
+	static addTagLocalStorage(tag: string): RecordTags {
+		try {
+			const globalTags = UtilityStorage.getMappingTagsItems();
+			const newTags = addRecordTag(globalTags, tag);
+			localStorage.setItem(ID_TAGS_ITEMS, JSON.stringify(newTags));
+			return newTags;
+		} catch {
+			return [];
+		}
+	}
+
+	static deleteTagLocalStorage(tag: string): RecordTags {
+		try {
+			const globalTags = UtilityStorage.getMappingTagsItems();
+			const newTags = deleteRecordTag(globalTags, tag);
+			localStorage.setItem(ID_TAGS_ITEMS, JSON.stringify(newTags));
+			return newTags;
+		} catch {
+			return [];
+		}
+	}
+
 	static makeMocksLoadItems = () => {
 		const items = Array.from({ length: 100 }, () =>
 			Math.floor(Math.random() * 100).toString(),
 		);
 		for (const item of items) {
-			UtilityStorage.addLocalStorage(item, "");
+			UtilityStorage.addLocalStorage(item, "", "");
 		}
 	};
 }

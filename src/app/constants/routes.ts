@@ -18,5 +18,9 @@ export const MAP_ROUTES: Record<string, Data> = {
 		title: "Clipboard - storage",
 		description: "Back up or import your saved data",
 	},
+	MANAGE_TAGS: {
+		title: "Clipboard - manage tags",
+		description: "Create and remove tags for your clipboard organization",
+	},
 	NOT_FOUND: { title: "Clipboard - not found", description: "Page not found" },
 };

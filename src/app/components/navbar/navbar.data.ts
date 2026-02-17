@@ -2,7 +2,7 @@ export const options: IOptionsNavbar = {
 	top: [
 		{
 			img: "document",
-			title: "List clipboard",
+			title: "Clipboard list",
 			link: "/",
 		},
 		{
@@ -12,6 +12,11 @@ export const options: IOptionsNavbar = {
 		},
 	],
 	bottom: [
+		{
+			img: "tags",
+			title: "Manage tags",
+			link: "/manage-tags",
+		},
 		{
 			img: "storage",
 			title: "Storage",
