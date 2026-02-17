@@ -1,11 +1,12 @@
 import { AfterViewInit, Component, signal } from "@angular/core";
-import { IconsComponent } from "@components/icons/icons.component";
+import { ListTagsComponent } from "@components/list-tags/list-tags.component";
 import { focusDomById } from "@utils/dom";
 import { UtilityStorage } from "@utils/storage/index.storage";
 
 @Component({
 	selector: "app-manage-tags",
-	imports: [IconsComponent],
+	imports: [ListTagsComponent],
+	standalone: true,
 	templateUrl: "./manage-tags.component.html",
 })
 export default class ManageTagsComponent implements AfterViewInit {
@@ -31,11 +32,6 @@ export default class ManageTagsComponent implements AfterViewInit {
 		const nextTags = UtilityStorage.addTagLocalStorage(this.tagInputValue());
 		this.tags.set(nextTags);
 		this.tagInputValue.set("");
-	}
-
-	handlerDeleteTag(tag: string) {
-		const nextTags = UtilityStorage.deleteTagLocalStorage(tag);
-		this.tags.set(nextTags);
 	}
 
 	ngAfterViewInit() {

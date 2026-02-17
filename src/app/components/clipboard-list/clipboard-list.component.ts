@@ -1,5 +1,4 @@
 import {
-	ChangeDetectionStrategy,
 	Component,
 	computed,
 	ElementRef,
@@ -8,14 +7,15 @@ import {
 	ViewChild,
 } from "@angular/core";
 import { ClipboardCardComponent } from "@components/clipboard-card/clipboard-card.component";
+import { SelectTagsComponent } from "@components/select-tags/select-tags.component";
 import { UtilityStorage } from "@utils/storage/index.storage";
 import { OPTIONS_CLIPBOARD_VIEW } from "src/app/constants/main";
 
 @Component({
 	selector: "app-clipboard-list",
-	imports: [ClipboardCardComponent],
+	imports: [ClipboardCardComponent, SelectTagsComponent],
+	standalone: true,
 	templateUrl: "./clipboard-list.component.html",
-	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClipboardListComponent {
 	private itemsPerPage = 12;
@@ -23,8 +23,10 @@ export class ClipboardListComponent {
 	searchContent = signal("");
 	currentPage = signal(1);
 	maxPages = signal(1);
+	tags = signal<RecordTags>([]);
 	clipboardViewMode = signal<ClipboardViewMode>("grid");
 	viewItems = signal<Array<RecordClipboard>>([]);
+	isListView = computed(() => this.clipboardViewMode() === "list");
 	totalItems = signal(
 		UtilityStorage.addMapperClipboardItems(
 			UtilityStorage.getMappingClipboardItems(),
@@ -33,7 +35,6 @@ export class ClipboardListComponent {
 	handlerSearchContent = computed(
 		() => this.totalItems().length > this.itemsPerPage,
 	);
-	isListView = computed(() => this.clipboardViewMode() === "list");
 
 	@ViewChild("searchContent") input!: ElementRef<HTMLInputElement>;
 
@@ -50,10 +51,13 @@ export class ClipboardListComponent {
 	}
 
 	ngOnInit() {
+		const tags = UtilityStorage.getMappingTagsItems();
 		const viewOption = UtilityStorage.getViewOptionSettingsStorage(
 			OPTIONS_CLIPBOARD_VIEW,
 		);
+
 		this.clipboardViewMode.set(viewOption.value);
+		this.tags.set(tags);
 
 		const items = this.totalItems();
 		this.maxPages.set(this.getMaxPages(items));

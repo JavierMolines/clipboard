@@ -1,12 +1,13 @@
 import { AfterViewInit, Component, signal } from "@angular/core";
 import { Router } from "@angular/router";
+import { SelectTagsComponent } from "@components/select-tags/select-tags.component";
 import { focusDomById } from "@utils/dom";
 import { UtilityStorage } from "@utils/storage/index.storage";
 import { OPTIONS_BUTTON_CHECK } from "src/app/constants/main";
 
 @Component({
 	selector: "app-create",
-	imports: [],
+	imports: [SelectTagsComponent],
 	templateUrl: "./create.component.html",
 })
 export default class CreateComponent implements AfterViewInit {

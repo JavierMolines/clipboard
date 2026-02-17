@@ -1,5 +1,11 @@
 import type { Routes } from "@angular/router";
 import NavbarComponent from "@components/navbar/navbar.component";
+import NotFoundComponent from "@pages/404/404.component";
+import CreateComponent from "@pages/create/create.component";
+import ListComponent from "@pages/list/list.component";
+import ManageTagsComponent from "@pages/manage-tags/manage-tags.component";
+import SettingsComponent from "@pages/settings/settings.component";
+import StorageComponent from "@pages/storage/storage.component";
 import { MAP_ROUTES } from "./constants/routes";
 
 export const routes: Routes = [
@@ -9,42 +15,34 @@ export const routes: Routes = [
 		children: [
 			{
 				path: "",
-				loadComponent: () =>
-					import("@pages/list/list.component").then((m) => m.default),
+				component: ListComponent,
 				data: MAP_ROUTES["HOME"],
 			},
 			{
 				path: "create",
-				loadComponent: () =>
-					import("@pages/create/create.component").then((m) => m.default),
+				component: CreateComponent,
 				data: MAP_ROUTES["CREATE"],
 			},
 			{
 				path: "settings",
-				loadComponent: () =>
-					import("@pages/settings/settings.component").then((m) => m.default),
+				component: SettingsComponent,
 				data: MAP_ROUTES["SETTINGS"],
 			},
 			{
 				path: "storage",
-				loadComponent: () =>
-					import("@pages/storage/storage.component").then((m) => m.default),
+				component: StorageComponent,
 				data: MAP_ROUTES["STORAGE"],
 			},
 			{
 				path: "manage-tags",
-				loadComponent: () =>
-					import("@pages/manage-tags/manage-tags.component").then(
-						(m) => m.default,
-					),
+				component: ManageTagsComponent,
 				data: MAP_ROUTES["MANAGE_TAGS"],
 			},
 		],
 	},
 	{
 		path: "not-found",
-		loadComponent: () =>
-			import("@pages/404/404.component").then((m) => m.default),
+		component: NotFoundComponent,
 		data: MAP_ROUTES["NOT_FOUND"],
 	},
 	{
