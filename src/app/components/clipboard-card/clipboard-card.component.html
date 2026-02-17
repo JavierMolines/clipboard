@@ -13,9 +13,9 @@
 
         @if (title !== "") {
           <span [class]="styles.listSeparator">-</span>
-          <h3 [class]="styles.listTitle">
+          <h2 [class]="styles.listTitle">
             {{ title }}
-          </h3>
+          </h2>
         }
 
         <span [class]="styles.listSeparator">-</span>
@@ -27,7 +27,7 @@
     </div>
   } @else {
     @if (title !== "") {
-      <h3 [class]="styles.title">{{ title }}</h3>
+      <h2 [class]="styles.title">{{ title }}</h2>
     }
 
     <span [class]="styles.time">{{ time }}</span>

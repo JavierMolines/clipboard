@@ -1,25 +1,7 @@
-const checkHexColor = (color: string) => {
-	return /^#[0-9A-Fa-f]{6}$/.test(color);
-};
-
-const generateRandomHexColor = () => {
-	const value = Math.floor(Math.random() * 16777215)
-		.toString(16)
-		.padStart(6, "0");
-
-	return `#${value}`;
-};
+import { generateRandomHexColor, getValidHexColor } from "./colors.tags";
 
 const existTagByName = (data: RecordTags, tagName: string) => {
 	return data.some((item) => item.name.toLowerCase() === tagName.toLowerCase());
-};
-
-const getValidHexColor = (item: { color?: unknown }) => {
-	if (typeof item.color !== "string") {
-		return null;
-	}
-
-	return checkHexColor(item.color) ? item.color : null;
 };
 
 const normalizeTagItem = (item: unknown) => {
